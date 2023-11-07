@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">Note And To Do App</string>
+
+    <!-- Descriptions -->
+    <string name="add_button_desc">ADD BUTTON</string>
+    <string name="note_img_desc">Application logo image</string>
+    <string name="btn_back_desc">Press to back</string>
+    <string name="btn_sign_in">Press to go to login page</string>
+    <string name="btn_close_desc">Press to close</string>
+    <string name="img_priority">Color indicating priority</string>
+    <string name="iv_search">Search note</string>
+    <string name="iv_filter">Filter note</string>
+    <string name="iv_pin_code">Start with a PIN code</string>
+    <string name="iv_edit">Edit note</string>
+    <string name="iv_delete">Delete note</string>
+
+    <!-- Bottom Navigation Menu Items -->
+    <string name="bottom_menu_note_item">Notes</string>
+    <string name="bottom_menu_to_do_item">To Do list</string>
+    <string name="bottom_menu_shopping_item">Shopping list</string>
+    <string name="bottom_menu_settings_item">Settings</string>
+
+
+    <!-- Notes Filter button popup Menu Items -->
+    <string name="show_new_first">Start with new notes</string>
+    <string name="show_old_first">Start with old notes</string>
+    <string name="show_high_first">Start with high priority</string>
+    <string name="show_low_first">Start with low priority</string>
+    <!-- Task Filter button popup Menu Items -->
+    <string name="show_first_completed">Start with completed</string>
+    <string name="show_first_not_completed">Start with not completed</string>
+    <string name="sort_by_deadline">Sort by deadline</string>
+    <!-- Toast texts -->
+    <string name="pwd_not_entered">Password not entered</string>
+
+    <!-- Fields hints -->
+    <string name="hint_login">Login</string>
+    <string name="hint_coast">Purchase price</string>
+    <string name="hint_quantity">Quantity</string>
+
+    <string name="task_name">Task name</string>
+    <string name="hint_add_note_title">Title</string>
+    <string name="hint_add_note_subtitle">Enter your note text here…</string>
+    <string name="hint_pwd">Password</string>
+    <string name="hint_buy_field">Name of product</string>
+    <string name="hint_pin_code">Pin Code</string>
+    <!-- Settings page texts -->
+    <string name="about_app">About the application</string>
+    <string name="users_list">A list of users</string>
+    <string name="start_with_code">Login using PIN code</string>
+    <string name="forget_login">Forget saved login</string>
+    <string name="change_language">Change the language</string>
+
+    <string name="enter_btn_txt">Enter</string>
+    <string name="save_btn_txt">Save</string>
+    <string name="btn_lets_shop_txt">Let\'s buy</string>
+    <string name="start_btn_txt">Start</string>
+    <string name="sign_up_text">Add user</string>
+    <string name="add_pin_code_text">Add PIN code</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="add_user">Enter login:</string>
+    <string name="add_pwd">Enter password:</string>
+    <string name="add_pin_code">Enter user PIN code:</string>
+    <string name="add_user_done">" —  a user with this login has been successfully added to the database.
+        \n\nYou can access the program using that user's password or PIN."</string>
+    <string name="add_user_done2">Change the password and Pin code using the <string name="section">"Settings"</string> section</string>
+    <string name="do_not_forget_pwd">There is no way to recover the user\'s password in the program!\n\nPlease don\'t forget your username and password!</string>
+    <string name="login_remember_txt">Remember me</string>
+    <string name="note_page_title_txt">Notes</string>
+    <string name="settings_page_title_txt">Settings</string>
+    <string name="tasks_page_title_txt">Tasks</string>
+    <string name="shopping_page_title_txt">Shopping List</string>
+    <string name="txt_deadline">Deadline:</string>
+    <string name="completed_time">Completed</string>
+    <string name="txt_added">Adding time:</string>
+    <string name="priority1">High</string>
+    <string name="priority2">Medium</string>
+    <string name="priority3">Low</string>
+    <string name="choose_priority">Choose Priority</string>
+    <string name="negative_btn_txt">No</string>
+    <string name="positive_btn_text">Yes</string>
+    <string name="done_btn_text">Add</string>
+    <string name="next_btn_text">Next task</string>
+
+    <string name="empty_note_list">No notes added yet</string>
+    <string name="empty_task_list">No tasks added yet</string>
+    <string name="empty_shopping_list">Shopping list is empty</string>
+    <string name="enter_pin_code">Enter your PIN</string>
+
+
+    <!-- Dialog texts -->
+    <string name="repeat_task_title">Repeat task</string>
+    <string name="edit_task_title">Edit task</string>
+    <string name="edit_task_btn_text">Update</string>
+    <string name="edit_task_deadline">Deadline:</string>
+
+    <string name="note_delete_dialog_title">Do you want to delete a note?</string>
+    <string name="note_delete_dialog_desc">Delete a note with the following title:</string>
+    <string name="user_delete_dialog_title">Delete user?</string>
+    <string name="user_delete_dialog_desc">Delete a user with the following login:</string>
+    <string name="task_delete_dialog_title">Delete task?</string>
+    <string name="task_delete_dialog_desc">Delete a task with the following name:</string>
+    <string name="login_delete_dialog_title">Delete login and password</string>
+    <string name="login_delete_dialog_desc">Delete the saved login and password to access the program?\\nYou will be able to enter the program by re-entering the login and password</string>
+    <string name="users_list_title">A list of users</string>
+
+    <string name="mentor">Mentor: @ZayniddinMamarasulov</string>
+    <string name="created_by">created by @admiralD</string>
+    <string name="about_app_text">This program was created to put into practice the knowledge that I gained while learning to program for Android.\n\n
+        The program allows to add notes, tasks and shopping lists entered by the user to the database and easily manage them.</string>
+
+    <string name="section">Settings</string>
+    <string name="add_task_dialog_title">Add a new task</string>
+    <string name="tv_set_deadline">Deadline:</string>
+    <string name="users_page_title">Users</string>
+    <string name="text_sum">so\'m</string>
+    <string name="login_not_entered">Login not entered</string>
+    <string name="data_not_entered">The data was not fully entered</string>
+    <string name="login_busy">This login already exists in the database. Please choose another login</string>
+    <string name="db_error">Error connecting to database</string>
+    <string name="empty_login">You did not enter your username and password</string>
+    <string name="incorrect_logn">Login or password is incorrect</string>
+    <string name="empty_product_name">Product name not entered</string>
+    <string name="empty_task_name">No task entered</string>
+    <string name="deadline_txt">Select execution time</string>
+    <string name="empty_pin">PIN code not defined! Set the user PIN first</string>
+    <string name="enter_with_pin">The function of entering the program by PIN code is enabled</string>
+    <string name="enter_with_pin_off">The function of accessing the program by PIN code has been disabled</string>
+    <string name="hide_completed">Hide completed tasks</string>
+    <string name="show_completed">Show completed tasks</string>
+    <string name="select_btn_desc">Press to select item</string>
+</resources>

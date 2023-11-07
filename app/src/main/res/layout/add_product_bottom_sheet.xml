@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/cancelButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/btn_close_desc"
+        android:focusable="true"
+        android:padding="12dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintBottom_toBottomOf="@+id/til_enter_product"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_enter_product"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/light_grey"
+        android:hint="@string/hint_buy_field"
+        android:maxWidth="400dp"
+        app:layout_constraintEnd_toStartOf="@+id/cancelButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cancelButton"
+        app:layout_constraintStart_toStartOf="@+id/til_enter_product"
+        app:layout_constraintTop_toBottomOf="@+id/til_enter_product">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_save_shopping_list"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_weight="1.4"
+            android:background="@drawable/btn_bg"
+            android:drawableEnd="@drawable/ic_lets_go_shop"
+            android:fontFamily="@font/roboto_bold"
+            android:paddingEnd="12dp"
+            android:text="@string/btn_lets_shop_txt"
+            android:textAllCaps="false"
+            android:textColor="@color/blue2"
+            android:textSize="22sp"
+            tools:ignore="RtlSymmetry" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_weight="1.1"
+            android:background="@drawable/btn_bg"
+            android:drawableEnd="@drawable/ic_add"
+            android:fontFamily="@font/roboto_bold"
+            android:paddingHorizontal="18dp"
+            android:text="Add"
+            android:textAllCaps="false"
+            android:textColor="@color/blue2"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

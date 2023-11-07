@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.PinCodeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/btn_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/btn_back_desc"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_back" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/btn_sign_in"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_login" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_enter_pin_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/btn_close_desc"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/enter_pin_code"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <LinearLayout
+        android:id="@+id/layout_constraint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/tv_enter_pin_code"
+        app:layout_constraintStart_toStartOf="@+id/tv_enter_pin_code"
+        app:layout_constraintTop_toBottomOf="@+id/tv_enter_pin_code">
+
+        <ImageView
+            android:id="@+id/iv_pin_code1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:contentDescription="@string/about_app"
+            android:src="@drawable/ic_circle" />
+
+        <ImageView
+            android:id="@+id/iv_pin_code2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:contentDescription="@string/about_app"
+            android:src="@drawable/ic_circle" />
+
+        <ImageView
+            android:id="@+id/iv_pin_code3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:contentDescription="@string/about_app"
+            android:src="@drawable/ic_circle" />
+
+        <ImageView
+            android:id="@+id/iv_pin_code4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/about_app"
+            android:src="@drawable/ic_circle" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/number_panel_bg"
+        android:columnCount="3"
+        android:defaultFocusHighlightEnabled="true"
+        android:elevation="4dp"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="24sp"
+        android:rowCount="4"
+        android:useDefaultMargins="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_constraint">
+
+        <Button
+            android:id="@+id/btn_1"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="1"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_2"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="2"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+
+        <Button
+            android:id="@+id/btn_3"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="3"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_4"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="4"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_5"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="5"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_6"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="6"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_7"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="7"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_8"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="8"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_9"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="9"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/btn_0"
+            android:layout_row="3"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:text="0"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+
+        <ImageButton
+            android:id="@+id/btn_clear"
+            android:layout_row="3"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:backgroundTint="#FFFFFF"
+            android:elevation="4dp"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_backspace"
+            android:textColor="@color/blue2"
+            android:textSize="28sp" />
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

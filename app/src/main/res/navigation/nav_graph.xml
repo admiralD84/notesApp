@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="uz.admiraldev.noteandtodoapp.views.SignInFragment"
+        android:label="fragment_sign_in"
+        app:popUpTo="@+id/signInFragment"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_noteFragment"
+            app:destination="@id/navigation_notes"
+            app:popUpTo="@+id/signInFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_pinCodeFragment"
+            app:destination="@id/pinCodeFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notes"
+        android:name="uz.admiraldev.noteandtodoapp.views.NoteFragment"
+        android:label="fragment_note"
+        tools:layout="@layout/fragment_note">
+        <action
+            android:id="@+id/action_navigation_notes_to_addNoteFragment"
+            app:destination="@id/addNoteFragment"
+            app:enterAnim="@anim/page_up"
+            app:exitAnim="@anim/page_exit_up" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_to_do_list"
+        android:name="uz.admiraldev.noteandtodoapp.views.TasksFragment"
+        android:label="fragment_to_do"
+        tools:layout="@layout/fragment_to_do" />
+    <fragment
+        android:id="@+id/navigation_shopping_list"
+        android:name="uz.admiraldev.noteandtodoapp.views.ShoppingFragment"
+        android:label="fragment_shopping"
+        tools:layout="@layout/fragment_shopping">
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="uz.admiraldev.noteandtodoapp.views.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_navigation_settings_to_usersListFragment"
+            app:destination="@id/usersListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="uz.admiraldev.noteandtodoapp.views.SignUpFragment"
+        android:label="fragment_sign_up"
+        app:popUpTo="@+id/signUpFragment"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment2"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_afterSignUpFragment"
+            app:destination="@id/afterSignUpFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popUpTo="@+id/signUpFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/afterSignUpFragment"
+        android:name="uz.admiraldev.noteandtodoapp.views.ConfirmSignUpFragment"
+        android:label="fragment_after_sign_up"
+        app:popUpTo="@+id/afterSignUpFragment"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_after_sign_up">
+        <action
+            android:id="@+id/action_afterSignUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popUpTo="@+id/signUpFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="uz.admiraldev.noteandtodoapp.views.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note">
+        <action
+            android:id="@+id/action_addNoteFragment_to_navigation_notes"
+            app:destination="@id/navigation_notes"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popUpTo="@+id/navigation_notes"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/pinCodeFragment"
+        android:name="uz.admiraldev.noteandtodoapp.views.PinCodeFragment"
+        android:label="fragment_pin_code"
+        tools:layout="@layout/fragment_pin_code">
+        <action
+            android:id="@+id/action_pinCodeFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/usersListFragment"
+        android:name="uz.admiraldev.noteandtodoapp.views.UsersListFragment"
+        android:label="fragment_users_list"
+        tools:layout="@layout/fragment_users_list">
+        <action
+            android:id="@+id/action_usersListFragment_to_navigation_settings"
+            app:destination="@id/navigation_settings"
+            app:popUpTo="@+id/navigation_settings"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

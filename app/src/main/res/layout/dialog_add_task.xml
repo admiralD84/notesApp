@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="340dp"
+    android:maxWidth="500dp"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/tv_add_task_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_task_dialog_title"
+        android:textAppearance="@style/dialog_title_style"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_close"
+        app:layout_constraintStart_toStartOf="@+id/til_task_name"
+        app:layout_constraintTop_toTopOf="@+id/btn_close" />
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/btn_back_desc"
+        android:padding="12dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="@id/til_task_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_task_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/task_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_add_task_dialog_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_task_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="6dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_deadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_set_deadline"
+        android:textAppearance="@style/add_deadline_style"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintStart_toStartOf="@id/til_task_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingVertical="12dp"
+        tools:text="15:40"
+        android:textAppearance="@style/task_text_style"
+        app:drawableEndCompat="@drawable/ic_expend_more"
+        app:layout_constraintEnd_toStartOf="@id/tv_dead_date"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toEndOf="@+id/tv_deadline"
+        app:layout_constraintTop_toBottomOf="@+id/til_task_name" />
+
+    <TextView
+        android:id="@+id/tv_dead_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawablePadding="6dp"
+        android:focusable="true"
+        android:paddingVertical="12dp"
+        android:textAppearance="@style/task_text_style"
+        app:drawableEndCompat="@drawable/ic_expend_more"
+        app:layout_constraintEnd_toEndOf="@id/til_task_name"
+        app:layout_constraintTop_toBottomOf="@+id/til_task_name"
+        tools:text="12.10.2023" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/dialog_yes_btn_selector"
+        android:fontFamily="@font/roboto_black"
+        android:paddingHorizontal="8dp"
+        android:text="@string/done_btn_text"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/til_task_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_next_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/dialog_yes_btn_selector"
+        android:fontFamily="@font/roboto_black"
+        android:paddingHorizontal="8dp"
+        android:text="@string/next_btn_text"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_done"
+        app:layout_constraintTop_toBottomOf="@+id/tv_deadline"
+        app:layout_constraintTop_toTopOf="@+id/btn_done" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Qaydlar va vazifalar dasturi</string>
+
+    <!-- Descriptions -->
+    <string name="add_button_desc">Qo\'shish tugmasi</string>
+    <string name="note_img_desc">Dastur logosidagi rasm</string>
+    <string name="img_priority">Muhimlilikni belgilovchi rang</string>
+    <string name="btn_back_desc">Orqaga qaytish uchun bosing</string>
+    <string name="btn_close_desc">Yopish uchun bosing</string>
+    <string name="iv_search">Qaydni izlash uchun bosing</string>
+    <string name="iv_filter">Qaydlarni saralash uchun bosing</string>
+    <string name="iv_pin_code">Dasturga pin kod orqali kirish</string>
+    <string name="iv_edit">Tahrirlash uchun bosing</string>
+    <string name="iv_delete">O\'chirib yuborish uchun bosing</string>
+
+    <!-- Bottom Navigation Menu Items -->
+    <string name="bottom_menu_note_item">Qaydlar</string>
+    <string name="bottom_menu_to_do_item">Vazifalar</string>
+    <string name="bottom_menu_shopping_item">Haridlar ro\'yxati</string>
+    <string name="bottom_menu_settings_item">Sozlamalar</string>
+
+
+    <!-- Notes Filter button popup Menu Items -->
+    <string name="show_new_first">Yangi kiritilganlar boshida</string>
+    <string name="show_old_first">Avval kiritilganlar boshida</string>
+    <string name="show_high_first">Eng muhimlari boshida</string>
+    <string name="show_low_first">Muhim emaslari boshida</string>
+    <!-- Task Filter button popup Menu Items -->
+    <string name="show_first_completed">Bajarilganlari boshida</string>
+    <string name="show_first_not_completed">Bajarilmaganlari boshida</string>
+    <string name="sort_by_deadline">Bajarish muddatiga ko\'ra</string>
+
+
+    <!-- Fields hints -->
+    <string name="pwd_not_entered">Parol kiritilmadi</string>
+    <string name="hint_login">Login</string>
+    <string name="task_name">Vazifa nomi</string>
+    <string name="hint_add_note_title">Sarlavha</string>
+    <string name="hint_add_note_subtitle">Qaydni kiriting…</string>
+    <string name="hint_pwd">Parol</string>
+    <string name="hint_buy_field">Mahsulot nomi</string>
+    <string name="hint_pin_code">Pin kod</string>
+    <!-- Settings page texts -->
+    <string name="about_app">Dastur haqida</string>
+    <string name="users_list">Foydalanuvchilar ro\'yxati</string>
+    <string name="start_with_code">Pin code orali kirish</string>
+    <string name="forget_login">Saqlangan loginni o\'chirish</string>
+    <string name="change_language">Dastur tilini o\'zgartirish</string>
+
+    <string name="enter_btn_txt">Boshlash</string>
+    <string name="save_btn_txt">Saqlash</string>
+    <string name="btn_lets_shop_txt">Haridga</string>
+    <string name="start_btn_txt">Boshlash</string>
+    <string name="sign_up_text">Foydalanuvchi qo\'shish</string>
+    <string name="add_pin_code_text">Pin kod qo\'shish</string>
+    <string name="cancel_text">Bekor qilish</string>
+    <string name="add_user">Loginni kiriting:</string>
+    <string name="add_pwd">Parolni kiriting:</string>
+    <string name="add_pin_code">Pin kodni kiriting:</string>
+    <string name="add_user_done">— ushbu loginga ega foydalanuvchi ma\'lumotlar bazasiga muvaffaqiyatli qo\'shildi.
+        \n\nSiz ushbu foydalanuvchi paroli yoki PIN-kodi yordamida dasturga kirishingiz mumkin.</string>
+    <string name="add_user_done2"><string name="section">"Sozlamalar"</string> bo\'limidan foydalanib parol va PIN kodni o\'zgartiring</string>
+    <string name="do_not_forget_pwd">Parolni qayta tiklash imkoniyati mavjud emas!!!
+        \n\nIltimos foydalanuvchi logini va parolini eslab qoling!
+    </string>
+    <string name="login_remember_txt">Foydalanuvchini eslab qolish</string>
+    <string name="note_page_title_txt">Qaydlar</string>
+    <string name="settings_page_title_txt">Sozlamalar</string>
+    <string name="tasks_page_title_txt">Vazifalar</string>
+    <string name="shopping_page_title_txt">Haridlar ro\'yxati</string>
+    <string name="txt_deadline">Muddat :</string>
+    <string name="completed_time">Bajarildi :</string>
+    <string name="txt_added">Qo\'shilgan :</string>
+    <string name="priority1">Yuqori</string>
+    <string name="priority2">O\'rta</string>
+    <string name="priority3">Past</string>
+    <string name="choose_priority">Muhimlilik darajasini belgilang</string>
+    <string name="negative_btn_txt">Yo\'q</string>
+    <string name="positive_btn_text">Ha</string>
+    <string name="done_btn_text">Kiritish</string>
+    <string name="next_btn_text">Keyingi vazifa</string>
+
+    <string name="empty_note_list">Qaydlar mavjud emas</string>
+    <string name="enter_pin_code">Pin kodni kiriting</string>
+
+
+    <!-- Dialog texts -->
+    <string name="repeat_task_title">Vazifani takrorlash</string>
+    <string name="edit_task_title">Vazifani o\'zgartirish</string>
+    <string name="edit_task_btn_text">O\'zgartirish</string>
+    <string name="edit_task_deadline">Muddat:</string>
+
+    <string name="note_delete_dialog_title">Qaydni o\'chirasizmi?</string>
+    <string name="note_delete_dialog_desc">Quyidagi sarlavhali qayd o\'chirilsinmi:</string>
+    <string name="user_delete_dialog_title">Foydalanuvchini o\'chirasizmi</string>
+    <string name="user_delete_dialog_desc">Quyidagi loginli foydalanuvchi o\'chirilsinmi:</string>
+    <string name="task_delete_dialog_title">Vazifani o\'chirasizmi</string>
+    <string name="task_delete_dialog_desc">Quyidagi nomli vazifa ma\'lumotlar bazasidan o\'chirilsinmi:</string>
+    <string name="login_delete_dialog_title">Login va parol o\'chirilsinmi</string>
+    <string name="login_delete_dialog_desc">Dasturga kirish uchun xotiraga saqlab qolingan login va parol o\'chirilsinmi?\n
+    Dasturga kirish uchun login va parolni qayta kiritish talab qilinadi</string>
+    <string name="users_list_title">Foydalanuvchilar ro\'yxati</string>
+
+    <string name="mentor">Ustoz: @ZayniddinMamarasulov</string>
+    <string name="created_by">created by @admiralD</string>
+    <string name="about_app_text">\t\tUshbu dastur Android dasturlash bo\'yicha tahsil olish davomida
+        egallangan bilimlarni amaliyotda sinab ko\'rish maqsadida ishlab chiqilgan.
+  \n\t\tDastur foydalanuvchi tomonidan kiritilgan qayd, topshiriq va haridlar ro\'yxatini ma\'lumotlar
+    bazasida saqlash imkonini beradi</string>
+    <string name="section">Sozlamalar</string>
+    <string name="add_task_dialog_title">Yangi vazifa kiritish</string>
+    <string name="tv_set_deadline">Muddat:</string>
+    <string name="btn_sign_in">Kirish sahifasiga oʻtish uchun bosing</string>
+    <string name="users_page_title">Foydalanuvchilar</string>
+    <string name="empty_task_list">Vazifalar mavjud emas</string>
+    <string name="empty_shopping_list">Haridlar ro\'yxati mavjud emas</string>
+    <string name="hint_coast">Narxi</string>
+    <string name="text_sum">so\'m</string>
+    <string name="hint_quantity">Miqdori</string>
+    <string name="login_not_entered">Login kiritilmadi</string>
+    <string name="data_not_entered">Ma\'lumotlar to\'liq kiritilmadi</string>
+    <string name="login_busy">Bu login maʼlumotlar bazasida mavjud. Iltimos, boshqa login tanlang</string>
+    <string name="db_error">Maʼlumotlar bazasiga ulanishda xatolik yuz berdi</string>
+    <string name="empty_login">Siz login va parolni kiritmadingiz</string>
+    <string name="incorrect_logn">Login yoki parol noto\'g\'ri</string>
+    <string name="empty_product_name">Mahsulot nomi kiritilmagan</string>
+    <string name="empty_task_name">Hech qanday vazifa kiritilmadi</string>
+    <string name="deadline_txt">Bajarish vaqtini belgilang</string>
+    <string name="empty_pin">PIN kod o\'rnatilmagan! Avval foydalanuvchi PIN kodini o\'rnating</string>
+    <string name="enter_with_pin">PIN-kod orqali dasturga kirish funksiyasi yoqildi</string>
+    <string name="enter_with_pin_off">Dasturga PIN-kod orqali kirish funksiyasi o\'chirildi</string>
+    <string name="hide_completed">Bajarilganlarni yashirish</string>
+    <string name="show_completed">Bajarilganlarni ko\'rsatish</string>
+    <string name="select_btn_desc">Elementni tanlash uchun bosing</string>
+
+
+</resources>

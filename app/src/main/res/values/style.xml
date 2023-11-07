@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="activeItemTextStyle">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/blue2</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="inActiveItemTextStyle">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="addUserTextStyle">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="DialogFragmentAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="BottomSheetDialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
+    </style>
+
+    <style name="bottomSheetBackground" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_bg</item>
+    </style>
+
+    <style name="note_title_style">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/blue2</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="page_title_style">
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:textColor">@color/blue2</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="dialog_title_style">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/blue2</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="add_deadline_style">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/blue2</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="task_text_style">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="completed_task_text_style">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="buy_items_style">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+    <style name="purchased_items_style">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">#555555</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="note_subtitle_style">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="maxLines">6</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="settings_page_title">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+
+    <style name="sign_up_titles">
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+</resources>

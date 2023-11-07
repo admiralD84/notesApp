@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/show_new_first"
+        android:icon="@drawable/ic_sort_by_date"
+        android:title="@string/show_new_first" />
+    <item
+        android:id="@+id/show_old_first"
+        android:icon="@drawable/ic_sort_by_date"
+        android:title="@string/show_old_first" />
+    <item
+        android:id="@+id/sort_high_priority_first"
+        android:icon="@drawable/ic_sort_by_priority"
+        android:title="@string/show_high_first" />
+    <item
+        android:id="@+id/sort_low_priority_first"
+        android:icon="@drawable/ic_sort_by_priority"
+        android:title="@string/show_low_first" />
+
+</menu>

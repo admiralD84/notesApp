@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/navigation_notes"
+            android:title="@string/bottom_menu_note_item"
+            android:icon="@drawable/ic_note" />
+
+        <item
+            android:id="@+id/navigation_to_do_list"
+            android:title="@string/bottom_menu_to_do_item"
+            android:icon="@drawable/ic_to_do" />
+
+        <item
+            android:id="@+id/placeholder"
+            android:enabled="false"
+            android:title="" />
+
+        <item
+            android:id="@+id/navigation_shopping_list"
+            android:title="@string/bottom_menu_shopping_item"
+            android:icon="@drawable/ic_shop" />
+        <item
+            android:id="@+id/navigation_settings"
+            android:title="@string/bottom_menu_settings_item"
+            android:icon="@drawable/ic_settings" />
+</menu>

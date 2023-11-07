@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/hide_completed"
+        android:icon="@drawable/ic_hide"
+        android:title="@string/hide_completed" />
+    <item
+        android:id="@+id/sort_by_deadline"
+        android:icon="@drawable/ic_sort_by_date"
+        android:title="@string/sort_by_deadline" />
+    <item
+        android:id="@+id/start_with_completed"
+        android:icon="@drawable/ic_done"
+        android:title="@string/show_first_completed" />
+    <item
+        android:id="@+id/stat_with_not_completed"
+        android:icon="@drawable/ic_close"
+        android:title="@string/show_first_not_completed" />
+
+</menu>
