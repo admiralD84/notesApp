@@ -1,7 +1,5 @@
 package uz.admiraldev.noteandtodoapp.viewmodels;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -56,7 +54,7 @@ public class NotesViewModel extends ViewModel {
     public LiveData<Note> getNoteLiveData() {
         myExecutor.execute(() -> {
             try {
-                selectedNote = MainActivity.getNoteDatabase().noteDao().getNote(selectedNoteId);
+                selectedNote = MainActivity.getAppDataBase().noteDao().getNote(selectedNoteId);
                 selectedNoteLiveData.postValue(selectedNote);
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
@@ -69,9 +67,9 @@ public class NotesViewModel extends ViewModel {
         myExecutor.execute(() -> {
             try {
                 if (fieldName.equals("addedDate"))
-                    notes = MainActivity.getNoteDatabase().noteDao().getSortedNotesByDate(isASC);
+                    notes = MainActivity.getAppDataBase().noteDao().getSortedNotesByDate(isASC);
                 else if (fieldName.equals("priority"))
-                    notes = MainActivity.getNoteDatabase().noteDao().getSortedNotesByPriority(isASC);
+                    notes = MainActivity.getAppDataBase().noteDao().getSortedNotesByPriority(isASC);
                 notesLiveData.postValue(notes);
             } catch (Exception e) {
                 Log.d("myTag", "getNotesLiveData error: " + e.getMessage());
@@ -98,7 +96,7 @@ public class NotesViewModel extends ViewModel {
     public LiveData<List<Note>> getNotesLiveData() {
         myExecutor.execute(() -> {
             try {
-                notes = MainActivity.getNoteDatabase().noteDao().getNotes();
+                notes = MainActivity.getAppDataBase().noteDao().getNotes();
                 notesLiveData.postValue(notes);
             } catch (Exception e) {
                 Log.d("myTag", "getNotesLiveData error: " + e.getMessage());
@@ -121,7 +119,7 @@ public class NotesViewModel extends ViewModel {
         selectedNoteLiveData.getValue().setAddedTime(currentTime);
         myExecutor.execute(() -> {
             try {
-                MainActivity.getNoteDatabase().noteDao().updateNote(selectedNoteLiveData.getValue());
+                MainActivity.getAppDataBase().noteDao().updateNote(selectedNoteLiveData.getValue());
             } catch (Exception e) {
                 Log.d("myTag", "updateNote error: " + e.getMessage());
             }
@@ -138,7 +136,7 @@ public class NotesViewModel extends ViewModel {
         enteredNote = new Note(noteTitle, noteDescription, currentDate, currentTime, priority);
         myExecutor.execute(() -> {
             try {
-                MainActivity.getNoteDatabase().noteDao().insert(enteredNote);
+                MainActivity.getAppDataBase().noteDao().insert(enteredNote);
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
             }
@@ -157,7 +155,7 @@ public class NotesViewModel extends ViewModel {
     public void deleteNoteById() {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getNoteDatabase().noteDao().deleteNote(selectedNoteId);
+                MainActivity.getAppDataBase().noteDao().deleteNote(selectedNoteId);
             } catch (Exception e) {
                 Log.d("myTag", "delete note error: " + e.getMessage());
             }
@@ -167,7 +165,7 @@ public class NotesViewModel extends ViewModel {
     public void deleteNotesByIds() {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getNoteDatabase().noteDao().deleteItemByIds((ArrayList<Integer>) selectedNotesList.getValue());
+                MainActivity.getAppDataBase().noteDao().deleteItemByIds((ArrayList<Integer>) selectedNotesList.getValue());
             } catch (Exception e) {
                 Log.d("myTag", "delete notes error: " + e.getMessage());
             }

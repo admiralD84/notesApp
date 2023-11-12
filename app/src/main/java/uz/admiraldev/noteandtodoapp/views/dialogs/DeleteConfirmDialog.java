@@ -61,14 +61,12 @@ public class DeleteConfirmDialog extends DialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         positiveBtn.setOnClickListener(view1 -> {
             listener.onPositiveButtonClicked();
             DeleteConfirmDialog.this.dismiss();
         });
-        negativeBtn.setOnClickListener(view1 -> {
-            listener.onNegativeButtonClicked();
-        });
-        super.onViewCreated(view, savedInstanceState);
+        negativeBtn.setOnClickListener(view1 -> listener.onNegativeButtonClicked());
     }
 
     public void setVisibilityNegativeBtn(boolean visibilityNegativeBtn) {

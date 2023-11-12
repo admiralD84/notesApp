@@ -70,7 +70,7 @@ public class ShopListViewModel extends ViewModel {
         }
         myExecutor.execute(() -> {
             try {
-                MainActivity.getShoppingListDatabase().shoppingListDao()
+                MainActivity.getAppDataBase().shoppingListDao()
                         .deleteItemByIds((ArrayList<Integer>) selectedProducts.getValue());
                 new Handler(Looper.getMainLooper()).post(() ->
                         Objects.requireNonNull(selectedProducts.getValue()).clear());
@@ -90,7 +90,7 @@ public class ShopListViewModel extends ViewModel {
     public void updateIsDoneField(int productId, boolean isDone, String quantity, String price) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getShoppingListDatabase().shoppingListDao().updateProductPurchaseState(
+                MainActivity.getAppDataBase().shoppingListDao().updateProductPurchaseState(
                         productId,
                         Calendar.getInstance().getTimeInMillis(),
                         isDone,
@@ -106,10 +106,8 @@ public class ShopListViewModel extends ViewModel {
     public void getShoppingList() {
         myExecutor.execute(() -> {
             try {
-                shoppingList = MainActivity.getShoppingListDatabase().shoppingListDao().getShoppingList();
+                shoppingList = MainActivity.getAppDataBase().shoppingListDao().getShoppingList();
                 shoppingListLive.postValue(shoppingList);
-//                new Handler(Looper.getMainLooper()).post(() ->
-//                        shoppingListLive.setValue(shoppingList));
             } catch (Exception e) {
                 Log.d("myTag", "getShoppingList error: " + e.getMessage());
             }
@@ -121,7 +119,7 @@ public class ShopListViewModel extends ViewModel {
             ShoppingList newProduct = new ShoppingList(productName, "", "",
                     Calendar.getInstance().getTimeInMillis(), false);
             try {
-                MainActivity.getShoppingListDatabase().shoppingListDao().insertProduct(newProduct);
+                MainActivity.getAppDataBase().shoppingListDao().insertProduct(newProduct);
             } catch (Exception e) {
                 Log.d("myTag", "insert task error: " + e.getMessage());
             }

@@ -17,8 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.Objects;
-
 import uz.admiraldev.noteandtodoapp.R;
 import uz.admiraldev.noteandtodoapp.databinding.FragmentSignUpBinding;
 import uz.admiraldev.noteandtodoapp.models.User;

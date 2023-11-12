@@ -39,7 +39,7 @@ public class TasksViewModel extends ViewModel {
     public void getAllTasks() {
         myExecutor.execute(() -> {
             try {
-                List<Task> fetchedTasks = MainActivity.getTaskDatabase().taskDao().getTasks();
+                List<Task> fetchedTasks = MainActivity.getAppDataBase().taskDao().getTasks();
                 new Handler(Looper.getMainLooper()).post(() -> {
                     allTasks = fetchedTasks;
                     filteredTasks(allTasks);
@@ -78,7 +78,7 @@ public class TasksViewModel extends ViewModel {
         filteredTasks(allTasks);
         myExecutor.execute(() -> {
             try {
-                MainActivity.getTaskDatabase().taskDao().deleteTask(taskId);
+                MainActivity.getAppDataBase().taskDao().deleteTask(taskId);
             } catch (Exception e) {
                 Log.d("myTag", "delete task error: " + e.getMessage());
             }
@@ -89,7 +89,7 @@ public class TasksViewModel extends ViewModel {
         Task newTask = newTaskBuilder(taskName);
         myExecutor.execute(() -> {
             try {
-                MainActivity.getTaskDatabase().taskDao().insert(newTask);
+                MainActivity.getAppDataBase().taskDao().insert(newTask);
                 new Handler(Looper.getMainLooper()).post(() -> {
                     List<Task> localTasksList = tasksLiveData.getValue();
                     if (localTasksList == null) {
@@ -109,7 +109,7 @@ public class TasksViewModel extends ViewModel {
     public void updateIsDoneField(int taskId, boolean isDone, int position) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getTaskDatabase().taskDao().updateTaskDoneField(
+                MainActivity.getAppDataBase().taskDao().updateTaskDoneField(
                         Calendar.getInstance().getTimeInMillis(),
                         taskId,
                         isDone);
@@ -132,15 +132,13 @@ public class TasksViewModel extends ViewModel {
                 List<Task> sortedTasks;
                 if (fieldName.equals("deadlineDate")) {
                     showCompletedTasks = false;
-                    sortedTasks = MainActivity.getTaskDatabase().taskDao().getSortedTasksByDeadline(isASC);
+                    sortedTasks = MainActivity.getAppDataBase().taskDao().getSortedTasksByDeadline(isASC);
                 } else if (fieldName.equals("isDone")) {
                     showCompletedTasks = true;
-                    sortedTasks = MainActivity.getTaskDatabase().taskDao().getSortedTasksByIsDoneState(isASC);
+                    sortedTasks = MainActivity.getAppDataBase().taskDao().getSortedTasksByIsDoneState(isASC);
                 } else
                     sortedTasks = new ArrayList<>();
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    filteredTasks(sortedTasks);
-                });
+                new Handler(Looper.getMainLooper()).post(() -> filteredTasks(sortedTasks));
             } catch (Exception e) {
                 Log.d("myTag", "getSortedTasks error: " + e.getMessage());
             }
@@ -163,7 +161,7 @@ public class TasksViewModel extends ViewModel {
 
             myExecutor.execute(() -> {
                 try {
-                    MainActivity.getTaskDatabase().taskDao().updateTask(taskToUpdate);
+                    MainActivity.getAppDataBase().taskDao().updateTask(taskToUpdate);
                     List<Task> updatedTasks = tasksLiveData.getValue();
                     updatedTasks.set(position, taskToUpdate);
                     tasksLiveData.postValue(updatedTasks);

@@ -23,12 +23,12 @@ public class UsersViewModel extends ViewModel {
     private final MutableLiveData<List<User>> usersLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loginHave = new MutableLiveData<>();
     private final MutableLiveData<User> userLiveData = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isPinCodeEnteredLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isPinCodeEnteredLiveData = new MutableLiveData<>();
 
     public void deleteUsers(User user) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getUserDatabase().userDao().deleteUser(user);
+                MainActivity.getAppDataBase().userDao().deleteUser(user);
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
             }
@@ -46,7 +46,7 @@ public class UsersViewModel extends ViewModel {
     public void checkUserPIN(String login) {
         myExecutor.execute(() -> {
             try {
-                boolean isPinCodeEntered = MainActivity.getUserDatabase().userDao().notEmptyPinCode(login, "-1");
+                boolean isPinCodeEntered = MainActivity.getAppDataBase().userDao().notEmptyPinCode(login, "-1");
                 isPinCodeEnteredLiveData.postValue(isPinCodeEntered);
             } catch (Exception e) {
                 Log.d("myTag", "checkUserPIN error ->" + e.getMessage());
@@ -61,7 +61,7 @@ public class UsersViewModel extends ViewModel {
     public LiveData<List<User>> getUsersLiveData() {
         myExecutor.execute(() -> {
             try {
-                users = MainActivity.getUserDatabase().userDao().getUsers();
+                users = MainActivity.getAppDataBase().userDao().getUsers();
                 usersLiveData.postValue(users);
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
@@ -73,7 +73,7 @@ public class UsersViewModel extends ViewModel {
     public void saveUser(User user) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getUserDatabase().userDao().insertUser(user);
+                MainActivity.getAppDataBase().userDao().insertUser(user);
             } catch (Exception e) {
                 Log.d("myTag", "save user error: " + e.getMessage());
             }
@@ -84,7 +84,7 @@ public class UsersViewModel extends ViewModel {
     public LiveData<User> getUser() {
         myExecutor.execute(() -> {
             try {
-                User tempUser = MainActivity.getUserDatabase().userDao().getUserByUsername(login);
+                User tempUser = MainActivity.getAppDataBase().userDao().getUserByUsername(login);
                 userLiveData.postValue(tempUser);
             } catch (Exception e) {
                 Log.d("myTag", "User get error: " + e.getMessage());
@@ -96,7 +96,7 @@ public class UsersViewModel extends ViewModel {
     public void updateUser(User newUser) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getUserDatabase().userDao().updateUser(newUser);
+                MainActivity.getAppDataBase().userDao().updateUser(newUser);
             } catch (Exception e) {
                 Log.d("myTag", "user update error: " + e.getMessage());
             }
@@ -107,7 +107,7 @@ public class UsersViewModel extends ViewModel {
         myExecutor.execute(() -> {
             boolean result;
             try {
-                result = MainActivity.getUserDatabase().userDao().isTakenLogin(login);
+                result = MainActivity.getAppDataBase().userDao().isTakenLogin(login);
                 loginHave.postValue(result);
 //                new Handler(Looper.getMainLooper()).post(() -> loginHave.setValue(result));
             } catch (Exception e) {
