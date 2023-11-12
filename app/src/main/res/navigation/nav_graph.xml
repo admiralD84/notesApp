@@ -24,7 +24,9 @@
             android:id="@+id/action_signInFragment_to_pinCodeFragment"
             app:destination="@id/pinCodeFragment"
             app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left" />
+            app:exitAnim="@anim/to_left"
+            app:popUpTo="@+id/signInFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -47,8 +49,7 @@
         android:id="@+id/navigation_shopping_list"
         android:name="uz.admiraldev.noteandtodoapp.views.ShoppingFragment"
         android:label="fragment_shopping"
-        tools:layout="@layout/fragment_shopping">
-    </fragment>
+        tools:layout="@layout/fragment_shopping" />
     <fragment
         android:id="@+id/navigation_settings"
         android:name="uz.admiraldev.noteandtodoapp.views.SettingsFragment"
@@ -89,7 +90,7 @@
             app:destination="@id/signInFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
-            app:popUpTo="@+id/signUpFragment"
+            app:popUpTo="@+id/afterSignUpFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -102,7 +103,7 @@
             app:destination="@id/navigation_notes"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
-            app:popUpTo="@+id/navigation_notes"
+            app:popUpTo="@+id/addNoteFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -124,7 +125,7 @@
         <action
             android:id="@+id/action_usersListFragment_to_navigation_settings"
             app:destination="@id/navigation_settings"
-            app:popUpTo="@+id/navigation_settings"
+            app:popUpTo="@+id/usersListFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

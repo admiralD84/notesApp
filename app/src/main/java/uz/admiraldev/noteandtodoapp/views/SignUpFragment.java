@@ -25,15 +25,16 @@ import uz.admiraldev.noteandtodoapp.models.User;
 import uz.admiraldev.noteandtodoapp.viewmodels.UsersViewModel;
 
 public class SignUpFragment extends Fragment {
-    FragmentSignUpBinding binding;
-    EditText etLogin, etPassword, etPinCode;
-    UsersViewModel usersViewModel;
-    Drawable[] drawables;
-    AppCompatTextView addPinCode;
-    Boolean isCancel = false;
-    boolean isLoginAlreadyHave;
+    private FragmentSignUpBinding binding;
+    private EditText etLogin, etPassword, etPinCode;
+    private UsersViewModel usersViewModel;
+    private Drawable[] drawables;
+    private AppCompatTextView addPinCode;
+    private static boolean isActionEdit = false;
+    private boolean isCancel = false;
+    private boolean isLoginAlreadyHave;
     private User user;
-    String login, pwd, pinCode;
+    private String login, pwd, pinCode;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -43,7 +44,6 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSignUpBinding.inflate(getLayoutInflater(), container, false);
-        binding.layoutPinCode.setVisibility(View.GONE);
         return binding.getRoot();
     }
 
@@ -57,19 +57,26 @@ public class SignUpFragment extends Fragment {
         etLogin = binding.etLogin;
         etPassword = binding.etPassword;
         etPinCode = binding.etPinCode;
-        if (usersViewModel.isEditUser()) {
-            binding.etLogin.setText(usersViewModel.getEditUserData().getUsername());
-            binding.etPassword.setText(usersViewModel.getEditUserData().getPassword());
-            if (usersViewModel.getEditUserData().getPinCode() != null
-                    || Objects.equals(usersViewModel.getEditUserData().getPinCode(), ""))
-                binding.etLogin.setText(usersViewModel.getEditUserData().getUsername());
+        if (isActionEdit) {
+            User user = usersViewModel.getEditUserData();
+            binding.tvAddPinCode.setVisibility(View.GONE);
+            binding.layoutPinCode.setVisibility(View.VISIBLE);
+            binding.etLogin.setText(user.getUsername());
+            binding.etPassword.setText(user.getPassword());
+            if (!user.getPinCode().equals("-1"))
+                binding.etPinCode.setText(user.getPinCode());
         }
 
 
         // initialize
         binding.btnBack.setOnClickListener(view1 -> {
-            navController.popBackStack(R.id.signUpFragment, false);
-            navController.navigate(R.id.action_signUpFragment_to_signInFragment2);
+            if (isActionEdit) {
+                navController.popBackStack(R.id.signUpFragment, true);
+                navController.navigate(R.id.usersListFragment);
+            } else {
+                navController.popBackStack(R.id.signUpFragment, true);
+                navController.navigate(R.id.signInFragment);
+            }
         });
 
         binding.btnSave.setOnClickListener(userSaveView -> {
@@ -102,8 +109,17 @@ public class SignUpFragment extends Fragment {
                                         Toast.LENGTH_SHORT).show();
                                 etLogin.requestFocus();
                             } else {
-                                if (usersViewModel.isEditUser()) {
-                                    usersViewModel.updateUser(user);
+                                if (isActionEdit) {
+                                    User editedUser = usersViewModel.getEditUserData();
+                                    if (!pinCode.isEmpty()) {
+                                        editedUser.setUsername(login);
+                                        editedUser.setPassword(pwd);
+                                        editedUser.setPinCode(pinCode);
+                                    } else {
+                                        editedUser.setUsername(login);
+                                        editedUser.setPassword(pwd);
+                                    }
+                                    usersViewModel.updateUser(editedUser);
                                     navController.navigate(R.id.navigation_settings);
                                 } else {
                                     usersViewModel.saveUser(user);
@@ -162,5 +178,15 @@ public class SignUpFragment extends Fragment {
             }
         });
 
+    }
+
+    public static void setActionEdit() {
+        isActionEdit = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isActionEdit = false;
     }
 }

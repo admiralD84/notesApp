@@ -30,6 +30,8 @@ import uz.admiraldev.noteandtodoapp.views.dialogs.TaskAddDialog;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     BottomNavigationView bottomNavigationView;
+    private static final String USER_DATA_PREF_KEY = "UserData";
+    private static final String APP_LANGUAGE_PREF_KEY = "appLanguage";
     private static NoteDatabase noteDatabase;
     TaskAddDialog addTaskDialog;
     AddProductsToPurchaseList addProductsToPurchaseList;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private static ShoppingListDatabase shoppingDatabase;
     private static UserDatabase userDatabase;
     NavController navController;
+    NavDestination currentDestination;
 
 
     @Override
@@ -51,19 +54,22 @@ public class MainActivity extends AppCompatActivity {
         shoppingDatabase = Room.databaseBuilder(this, ShoppingListDatabase.class, "shopping-database").build();
 
         bottomNavigationView = binding.bottomNavigationView;
-        SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        String tmpLang = sharedPreferences.getString("appLanguage",
+        SharedPreferences sharedPreferences = getSharedPreferences(USER_DATA_PREF_KEY, Context.MODE_PRIVATE);
+        String tmpLang = sharedPreferences.getString(APP_LANGUAGE_PREF_KEY,
                 Resources.getSystem().getConfiguration().locale.getLanguage());
         LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(tmpLang);
         AppCompatDelegate.setApplicationLocales(appLocale);
 
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
-        assert navHostFragment != null;
-        navController = navHostFragment.getNavController();
+        if (navHostFragment != null)
+            navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
         hideBottomBar();
         initClicks();
+
     }
+
 
     private void initClicks() {
         binding.floatingActionButton.setOnClickListener(view -> {
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.action_navigation_notes_to_addNoteFragment);
                     hideBottomBar();
                 } else if (currentFragmentId == R.id.navigation_to_do_list) {
-                    addTaskDialog = new TaskAddDialog(TasksFragment.tasksViewModel);
+                    addTaskDialog = new TaskAddDialog(TasksFragment.tasksViewModel, -1);
                     addTaskDialog.show(this.getSupportFragmentManager(), TaskAddDialog.class.toString());
                 } else if (currentFragmentId == R.id.navigation_shopping_list) {
                     addProductsToPurchaseList = new AddProductsToPurchaseList(ShoppingFragment.shoppingViewModel);
@@ -82,7 +88,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+   /*     getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                currentDestination = navController.getCurrentDestination();
+                if (currentDestination != null) {
+                    int currentFragmentId = currentDestination.getId();
+                    if (currentFragmentId == R.id.navigation_notes ||
+                            currentFragmentId == R.id.navigation_to_do_list ||
+                            currentFragmentId == R.id.navigation_shopping_list) {
+                        finish();
+                    }
+                } else
+                    navController.popBackStack();
+            }
+        });*/
     }
+
 
     private void hideBottomBar() {
         binding.bottomAppBar.setVisibility(View.GONE);

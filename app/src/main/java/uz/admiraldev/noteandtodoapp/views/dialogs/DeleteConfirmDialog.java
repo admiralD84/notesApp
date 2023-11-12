@@ -67,7 +67,6 @@ public class DeleteConfirmDialog extends DialogFragment {
         });
         negativeBtn.setOnClickListener(view1 -> {
             listener.onNegativeButtonClicked();
-//            DeleteConfirmDialog.this.dismiss();
         });
         super.onViewCreated(view, savedInstanceState);
     }

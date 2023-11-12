@@ -19,36 +19,40 @@ import java.util.List;
 
 import uz.admiraldev.noteandtodoapp.R;
 import uz.admiraldev.noteandtodoapp.models.ShoppingList;
+import uz.admiraldev.noteandtodoapp.viewmodels.ShopListViewModel;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int NOT_DONE_ITEM_VIEW = 1;
     private static final int DONE_ITEM_VIEW = 2;
     private List<ShoppingList> productsList;
     private static String sumText;
+    private final ShopListViewModel shopListViewModel;
     private final ShoppingListAdapter.ProductItemClickListener itemClickListener;
 
-    public ShoppingListAdapter(ProductItemClickListener itemClickListener, Context context) {
+    public ShoppingListAdapter(ProductItemClickListener itemClickListener,
+                               Context context,
+                               ShopListViewModel shopListViewModel) {
         this.itemClickListener = itemClickListener;
+        this.shopListViewModel = shopListViewModel;
         sumText = context.getString(R.string.text_sum);
     }
 
 
     @NonNull
     @Override
-
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder myViewHolder;
         switch (viewType) {
             case DONE_ITEM_VIEW:
                 View doneItemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.item_complated_shop_list, parent, false);
-                myViewHolder = new CompletedPurchaseViewHolder(doneItemView);
+                myViewHolder = new CompletedPurchaseViewHolder(doneItemView, shopListViewModel);
                 break;
             case NOT_DONE_ITEM_VIEW:
             default:
                 View notCompletedItemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.item_shop_list, parent, false);
-                myViewHolder = new NotCompletedPurchaseViewHolder(notCompletedItemView);
+                myViewHolder = new NotCompletedPurchaseViewHolder(notCompletedItemView, shopListViewModel);
                 break;
         }
         return myViewHolder;
@@ -86,17 +90,45 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     static class NotCompletedPurchaseViewHolder extends RecyclerView.ViewHolder {
         private final TextView productNameTV = itemView.findViewById(R.id.tv_product_item);
         private final CheckBox purchaseDoneChB = itemView.findViewById(R.id.chb_purchase_done);
+        private final ShopListViewModel shopListViewModel;
+        private final ImageView itemSelect = itemView.findViewById(R.id.iv_select);
+        private boolean isActionDelete = false;
+        private boolean isSelectedItem = false;
 
-        public NotCompletedPurchaseViewHolder(@NonNull View itemView) {
+        public NotCompletedPurchaseViewHolder(@NonNull View itemView, ShopListViewModel shopListViewModel) {
             super(itemView);
+            this.shopListViewModel = shopListViewModel;
         }
 
         public void bind(ShoppingList currentProduct, ProductItemClickListener clickListener) {
             productNameTV.setText(currentProduct.getProductName());
-
+            shopListViewModel.isActionDelete.observeForever(isDelete -> {
+                if (isDelete) {
+                    isActionDelete = true;
+                    purchaseDoneChB.setVisibility(View.GONE);
+                    itemSelect.setVisibility(View.VISIBLE);
+                } else {
+                    isActionDelete = false;
+                    purchaseDoneChB.setVisibility(View.VISIBLE);
+                    itemSelect.setImageResource(R.drawable.ic_circle);
+                    itemSelect.setVisibility(View.GONE);
+                }
+            });
             purchaseDoneChB.setOnCheckedChangeListener((checkBoxView, isChecked) -> {
                 checkBoxView.setChecked(false);
                 clickListener.purchaseDoneChanged(currentProduct.getId());
+            });
+            itemView.setOnClickListener(notPurchasedItemView -> {
+                if (isActionDelete) {
+                    if (isSelectedItem) {
+                        isSelectedItem = false;
+                        itemSelect.setImageResource(R.drawable.ic_circle);
+                    } else {
+                        isSelectedItem = true;
+                        itemSelect.setImageResource(R.drawable.ic_checked_circle);
+                    }
+                    clickListener.onItemClicked(getAdapterPosition(), currentProduct.getId());
+                }
             });
         }
     }
@@ -105,10 +137,14 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private final TextView productNameTV = itemView.findViewById(R.id.tv_product_name);
         private final TextView purchaseTime = itemView.findViewById(R.id.tv_purchase_time);
         private final TextView coast = itemView.findViewById(R.id.tv_coast);
-        private final ImageView deleteProduct = itemView.findViewById(R.id.iv_purchase_delete);
+        private final ImageView itemSelect = itemView.findViewById(R.id.iv_completed_select);
+        private final ShopListViewModel shopListViewModel;
+        private boolean isActionDelete = false;
+        private boolean isSelectedItem = false;
 
-        public CompletedPurchaseViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public CompletedPurchaseViewHolder(@NonNull View complatedItemView, ShopListViewModel shopListViewModel) {
+            super(complatedItemView);
+            this.shopListViewModel = shopListViewModel;
         }
 
         public void bind(ShoppingList currantProduct, ProductItemClickListener clickListener) {
@@ -120,10 +156,27 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             purchaseTime.setText(currantProduct.getPurchaseTimeInString());
             String tmpCoast = currantProduct.getQuantity() + " " + currantProduct.getCost() + " " + sumText;
             coast.setText(tmpCoast);
-
-            deleteProduct.setOnClickListener(deleteProductView -> {
-                Log.d("myTag", "delete button clicked");
-                clickListener.onDeleteClicked(currantProduct.getId());
+            shopListViewModel.isActionDelete.observeForever(isDelete -> {
+                if (isDelete) {
+                    isActionDelete = false;
+                    itemSelect.setVisibility(View.VISIBLE);
+                } else {
+                    isActionDelete = true;
+                    itemSelect.setImageResource(R.drawable.ic_circle);
+                    itemSelect.setVisibility(View.GONE);
+                }
+            });
+            itemView.setOnClickListener(purchasedItem -> {
+                if (!isActionDelete) {
+                    if (isSelectedItem) {
+                        isSelectedItem = false;
+                        itemSelect.setImageResource(R.drawable.ic_circle);
+                    } else {
+                        isSelectedItem = true;
+                        itemSelect.setImageResource(R.drawable.ic_checked_circle);
+                    }
+                    clickListener.onItemClicked(getAdapterPosition(), currantProduct.getId());
+                }
             });
         }
     }
@@ -141,7 +194,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         void purchaseDoneChanged(int id);
 
-        void onDeleteClicked(int id);
+        void onItemClicked(int position, int productId);
+
     }
 
 }

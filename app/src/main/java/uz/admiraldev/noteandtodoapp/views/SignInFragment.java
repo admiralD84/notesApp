@@ -44,9 +44,10 @@ public class SignInFragment extends Fragment {
         super.onCreate(savedInstanceState);
         sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         navController = NavHostFragment.findNavController(this);
-        if (sharedPreferences.getBoolean("isEnterWithPinCode", false)) {
+        if (sharedPreferences.getBoolean("isEnterWithPinCode", false))
             navController.navigate(R.id.pinCodeFragment);
-        }
+//        else
+//            binding.ivPinCode.setEnabled(false);
         if (sharedPreferences.getBoolean("isRememberedUser", false)) {
             navController.navigate(R.id.action_signInFragment_to_noteFragment);
         }
@@ -63,8 +64,15 @@ public class SignInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        requireActivity().findViewById(R.id.bottomAppBar).setVisibility(View.GONE);
-        requireActivity().findViewById(R.id.floatingActionButton).setVisibility(View.GONE);
+        View bottomAppBar = requireActivity().findViewById(R.id.bottomAppBar);
+        if (bottomAppBar != null && bottomAppBar.getVisibility() == View.VISIBLE) {
+            bottomAppBar.setVisibility(View.GONE);
+        }
+
+        View fab = requireActivity().findViewById(R.id.floatingActionButton);
+        if (fab != null && fab.getVisibility() == View.VISIBLE) {
+            fab.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -115,7 +123,6 @@ public class SignInFragment extends Fragment {
             } else
                 Toast.makeText(requireContext(), requireContext().getString(R.string.empty_login),
                         Toast.LENGTH_SHORT).show();
-
         });
         binding.chbRemember.setOnCheckedChangeListener((compoundButton, isChecked) ->
                 isRememberLogin = isChecked

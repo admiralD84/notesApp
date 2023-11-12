@@ -10,6 +10,17 @@
     android:padding="12dp"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_purchase_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="15sp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/purchase_dialog_title"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_coast"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -21,7 +32,7 @@
         android:maxWidth="488dp"
         app:layout_constraintEnd_toStartOf="@+id/tv_sum"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tv_purchase_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_price"
@@ -75,7 +86,7 @@
         android:layout_marginEnd="12dp"
         android:background="@drawable/dialog_no_btn_selector"
         android:fontFamily="@font/roboto_black"
-        android:text="@string/negative_btn_txt"
+        android:text="@string/cancel_text"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_positive" />
@@ -88,7 +99,7 @@
         android:layout_marginEnd="12dp"
         android:background="@drawable/dialog_yes_btn_selector"
         android:fontFamily="@font/roboto_black"
-        android:text="@string/positive_btn_text"
+        android:text="@string/save_btn_txt"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

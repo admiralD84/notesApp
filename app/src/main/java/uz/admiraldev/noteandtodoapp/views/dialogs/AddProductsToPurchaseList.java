@@ -45,15 +45,18 @@ public class AddProductsToPurchaseList extends BottomSheetDialogFragment {
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(binding.etProducts, InputMethodManager.SHOW_IMPLICIT);
 
-        binding.cancelButton.setOnClickListener(view1 -> dismiss());
-        binding.btnSaveShoppingList.setOnClickListener(view1 -> {
+        binding.cancelButton.setOnClickListener(view1 -> {
             if (binding.etProducts.getText() != null) {
-                String productName = binding.etProducts.getText().toString();
-                saveData(productName);
-            }
-            dismiss();
+                String productName = binding.etProducts.getText().toString().trim();
+                if (!productName.isEmpty())
+                    binding.etProducts.setText("");
+                else
+                    dismiss();
+            } else
+                dismiss();
         });
-        binding.btnNext.setOnClickListener(view1 -> {
+
+        binding.btnAddToList.setOnClickListener(view1 -> {
             if (binding.etProducts.getText() != null) {
                 String productName = binding.etProducts.getText().toString();
                 saveData(productName);

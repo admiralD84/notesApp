@@ -45,6 +45,7 @@ public class PinCodeFragment extends Fragment {
         binding = FragmentPinCodeBinding.inflate(inflater, container, false);
         sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        navController = NavHostFragment.findNavController(this);
         if (sharedPreferences.getString("login", "").isEmpty()) {
             navController.navigate(R.id.signInFragment);
         } else
@@ -56,7 +57,6 @@ public class PinCodeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = NavHostFragment.findNavController(this);
         binding.btnLogin.setOnClickListener(exitView -> {
             editor.putBoolean("isEnterWithPinCode", false);
             editor.apply();

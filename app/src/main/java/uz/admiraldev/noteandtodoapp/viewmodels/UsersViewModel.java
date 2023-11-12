@@ -1,7 +1,5 @@
 package uz.admiraldev.noteandtodoapp.viewmodels;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -19,17 +17,13 @@ import uz.admiraldev.noteandtodoapp.models.User;
 public class UsersViewModel extends ViewModel {
 
     private List<User> users = new ArrayList<>();
-    private final ExecutorService myExecutor;
+    private final ExecutorService myExecutor = Executors.newSingleThreadExecutor();
     private String login;
-    boolean isEditUser = false;
-    User editUser;
+    private User editUser;
     private final MutableLiveData<List<User>> usersLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loginHave = new MutableLiveData<>();
     private final MutableLiveData<User> userLiveData = new MutableLiveData<>();
-
-    public UsersViewModel() {
-        myExecutor = Executors.newSingleThreadExecutor();
-    }
+    private MutableLiveData<Boolean> isPinCodeEnteredLiveData = new MutableLiveData<>();
 
     public void deleteUsers(User user) {
         myExecutor.execute(() -> {
@@ -41,16 +35,23 @@ public class UsersViewModel extends ViewModel {
         });
     }
 
-    public boolean isEditUser() {
-        return isEditUser;
-    }
-
-    public void setEditUser(boolean editUser) {
-        isEditUser = editUser;
-    }
-
     public User getEditUserData() {
         return editUser;
+    }
+
+    public LiveData<Boolean> getIsPinCodeEnteredLiveData() {
+        return isPinCodeEnteredLiveData;
+    }
+
+    public void checkUserPIN(String login) {
+        myExecutor.execute(() -> {
+            try {
+                boolean isPinCodeEntered = MainActivity.getUserDatabase().userDao().notEmptyPinCode(login, "-1");
+                isPinCodeEnteredLiveData.postValue(isPinCodeEntered);
+            } catch (Exception e) {
+                Log.d("myTag", "checkUserPIN error ->" + e.getMessage());
+            }
+        });
     }
 
     public void setEditUserData(User editUser) {
@@ -61,7 +62,7 @@ public class UsersViewModel extends ViewModel {
         myExecutor.execute(() -> {
             try {
                 users = MainActivity.getUserDatabase().userDao().getUsers();
-                new Handler(Looper.getMainLooper()).post(() -> usersLiveData.setValue(users));
+                usersLiveData.postValue(users);
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
             }
@@ -84,8 +85,7 @@ public class UsersViewModel extends ViewModel {
         myExecutor.execute(() -> {
             try {
                 User tempUser = MainActivity.getUserDatabase().userDao().getUserByUsername(login);
-                new Handler(Looper.getMainLooper()).post(() ->
-                        userLiveData.setValue(tempUser));
+                userLiveData.postValue(tempUser);
             } catch (Exception e) {
                 Log.d("myTag", "User get error: " + e.getMessage());
             }
@@ -108,7 +108,8 @@ public class UsersViewModel extends ViewModel {
             boolean result;
             try {
                 result = MainActivity.getUserDatabase().userDao().isTakenLogin(login);
-                new Handler(Looper.getMainLooper()).post(() -> loginHave.setValue(result));
+                loginHave.postValue(result);
+//                new Handler(Looper.getMainLooper()).post(() -> loginHave.setValue(result));
             } catch (Exception e) {
                 Log.d("myTag", "check login error: " + e.getMessage());
             }

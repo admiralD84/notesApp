@@ -8,7 +8,7 @@
     android:background="@color/light_grey">
 
     <ImageView
-        android:id="@+id/iv_select"
+        android:id="@+id/iv_completed_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/select_btn_desc"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/chb_done"
         app:layout_constraintEnd_toStartOf="@+id/chb_done"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/iv_select"
+        app:layout_constraintStart_toEndOf="@+id/iv_completed_select"
         app:layout_constraintTop_toTopOf="@+id/chb_done"
         tools:text="Shakar 2 kg" />
 
@@ -62,33 +62,33 @@
         android:checked="true"
         android:enabled="false"
         android:padding="6dp"
-        app:layout_constraintEnd_toStartOf="@+id/delete_product_layout"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/delete_product_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@color/light_grey"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_purchase_delete"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--
+        <LinearLayout
+            android:id="@+id/delete_product_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:clickable="true"
-            android:contentDescription="@string/iv_delete"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:src="@drawable/ic_delete"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:layout_height="0dp"
+            android:background="@color/light_grey"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/iv_purchase_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:clickable="true"
+                android:contentDescription="@string/iv_delete"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone" />
+        </LinearLayout>
+    -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

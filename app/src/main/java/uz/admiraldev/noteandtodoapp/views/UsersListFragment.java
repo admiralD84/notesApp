@@ -1,5 +1,7 @@
 package uz.admiraldev.noteandtodoapp.views;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,9 @@ public class UsersListFragment extends Fragment implements UsersAdapter.UserItem
     private FragmentUsersListBinding binding;
     private NavController navController;
     DeleteConfirmDialog deleteDialog;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private String savedLogin;
 
     public UsersListFragment() {
         // Required empty public constructor
@@ -36,6 +41,8 @@ public class UsersListFragment extends Fragment implements UsersAdapter.UserItem
         binding = FragmentUsersListBinding.inflate(getLayoutInflater(), container, false);
         navController = NavHostFragment.findNavController(this);
         usersViewModel = new ViewModelProvider(requireActivity()).get(UsersViewModel.class);
+        sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        savedLogin = sharedPreferences.getString("login", "");
         return binding.getRoot();
     }
 
@@ -55,6 +62,10 @@ public class UsersListFragment extends Fragment implements UsersAdapter.UserItem
         deleteDialog = new DeleteConfirmDialog(new DeleteConfirmDialog.ClickListener() {
             @Override
             public void onPositiveButtonClicked() {
+                if (user.getUsername().equals(savedLogin)) {
+                    editor.putString("login", null);
+                    editor.apply();
+                }
                 usersViewModel.deleteUsers(user);
                 usersViewModel.getUsersLiveData().observe(getViewLifecycleOwner(), usersList -> {
                     binding.rvUsers.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -78,7 +89,7 @@ public class UsersListFragment extends Fragment implements UsersAdapter.UserItem
     @Override
     public void onEditBtnClicked(int position, User user) {
         usersViewModel.setEditUserData(user);
-        usersViewModel.setEditUser(true);
+        SignUpFragment.setActionEdit();
         navController.navigate(R.id.signUpFragment);
     }
 }

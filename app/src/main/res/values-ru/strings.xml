@@ -32,7 +32,7 @@
     <string name="start_with_code">Войти с помощью PIN-кода</string>
     <string name="forget_login">Забыть сохраненный логин</string>
     <string name="change_language">Изменить язык</string>
-    <string name="btn_lets_shop_txt">Покупать</string>
+    <string name="btn_add_to_list">Добавить в список</string>
     <string name="start_btn_txt">Начинать</string>
     <string name="sign_up_text">Добавить пользователя</string>
     <string name="add_pin_code_text">Добавить PIN-код</string>
@@ -108,4 +108,7 @@
     <string name="hide_completed">Скрыть выполненных</string>
     <string name="show_completed">Показать выполненные задачи</string>
     <string name="select_btn_desc">Нажимай для выбора элемента</string>
+    <string name="product_delete_dialog_title">Продолжить удаление выбранных элементов?</string>
+    <string name="product_delete_dialog_desc">Вы уверены, что хотите удалить выбранные товары из списка покупок?</string>
+    <string name="purchase_dialog_title">Отслеживайте свои расходы на покупки (необязательно)</string>
 </resources>

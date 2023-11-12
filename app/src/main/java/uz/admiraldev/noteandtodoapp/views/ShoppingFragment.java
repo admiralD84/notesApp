@@ -1,13 +1,14 @@
 package uz.admiraldev.noteandtodoapp.views;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,11 +19,16 @@ import uz.admiraldev.noteandtodoapp.R;
 import uz.admiraldev.noteandtodoapp.adapters.ShoppingListAdapter;
 import uz.admiraldev.noteandtodoapp.databinding.FragmentShoppingBinding;
 import uz.admiraldev.noteandtodoapp.viewmodels.ShopListViewModel;
+import uz.admiraldev.noteandtodoapp.views.dialogs.DeleteConfirmDialog;
 import uz.admiraldev.noteandtodoapp.views.dialogs.PurchaseConfirmDialog;
 
 public class ShoppingFragment extends Fragment implements ShoppingListAdapter.ProductItemClickListener {
     private FragmentShoppingBinding binding;
     private ShoppingListAdapter shopAdapter;
+    private boolean isPurchasedHidden = false;
+    private DeleteConfirmDialog confirmDialog;
+    private boolean isActionDelete = false;
+    private boolean isEmpty = false;
     PurchaseConfirmDialog purchaseConfirmDialog;
     public static ShopListViewModel shoppingViewModel;
 
@@ -52,34 +58,93 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.rvShoppingList.setLayoutManager(new LinearLayoutManager(requireContext()));
-        shopAdapter = new ShoppingListAdapter(this, requireContext());
+        shopAdapter = new ShoppingListAdapter(this, requireContext(), shoppingViewModel);
         shoppingViewModel.shoppingListLive.observe(getViewLifecycleOwner(), products -> {
             if (products.size() != 0) {
                 binding.progress.setVisibility(View.GONE);
+                binding.ivProductDelete.setVisibility(View.VISIBLE);
+                binding.ivShowHidePurchased.setVisibility(View.VISIBLE);
+                binding.ivShowHidePurchased.setImageTintList(
+                        ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.blue2)));
                 binding.rvShoppingList.setVisibility(View.VISIBLE);
+                isEmpty = false;
                 if (binding.tvEmptyList.getVisibility() == View.VISIBLE)
                     binding.tvEmptyList.setVisibility(View.GONE);
                 shopAdapter.setData(products);
                 binding.rvShoppingList.setAdapter(shopAdapter);
             } else {
+                isEmpty = true;
                 binding.progress.setVisibility(View.GONE);
                 binding.tvEmptyList.setText(getString(R.string.empty_shopping_list));
+                binding.ivProductDelete.setVisibility(View.GONE);
+                binding.ivShowHidePurchased.setVisibility(View.GONE);
                 binding.rvShoppingList.setVisibility(View.GONE);
                 binding.tvEmptyList.setVisibility(View.VISIBLE);
             }
         });
         binding.ivProductDelete.setOnClickListener(view1 -> {
-//            shoppingViewModel.isSelectItemsOn();
+            int selectedItemsCount = shoppingViewModel.getSelectedProductsCount();
+            if (selectedItemsCount > 0) {
+                confirmDialog = new DeleteConfirmDialog(new DeleteConfirmDialog.ClickListener() {
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        shoppingViewModel.deleteSelectedProducts(isPurchasedHidden);
+                        binding.ivClearSelected.setVisibility(View.GONE);
+                        isActionDelete = !isActionDelete;
+                        shoppingViewModel.setIsActionDelete(isActionDelete);
+                    }
+
+                    @Override
+                    public void onNegativeButtonClicked() {
+                        confirmDialog.dismiss();
+                    }
+                });
+                confirmDialog.setAlertTitle(getString(R.string.product_delete_dialog_title));
+                confirmDialog.setAlertMessage(getString(R.string.product_delete_dialog_desc));
+                confirmDialog.setVisibilityPositiveBtn(true);
+                confirmDialog.setVisibilityNegativeBtn(true);
+                confirmDialog.show(requireActivity().getSupportFragmentManager(),
+                        DeleteConfirmDialog.class.toString());
+            } else {
+                isActionDelete = !isActionDelete;
+                shoppingViewModel.setIsActionDelete(isActionDelete);
+            }
+        });
+        shoppingViewModel.isActionDelete.observe(getViewLifecycleOwner(), isDelete -> {
+            if (!isEmpty) {
+                if (isDelete) {
+                    binding.ivShowHidePurchased.setVisibility(View.GONE);
+                    binding.ivClearSelected.setImageTintList(
+                            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.blue2)));
+                    binding.ivClearSelected.setVisibility(View.VISIBLE);
+                } else {
+                    binding.ivClearSelected.setVisibility(View.GONE);
+                    binding.ivClearSelected.setImageTintList(
+                            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.blue2)));
+                    binding.ivShowHidePurchased.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        binding.ivShowHidePurchased.setOnClickListener(hideCompletedBtn -> {
+            isPurchasedHidden = !isPurchasedHidden;
+            if (isPurchasedHidden) {
+                shoppingViewModel.hidePurchasedProducts();
+                binding.ivShowHidePurchased.setImageResource(R.drawable.ic_show);
+            } else {
+                shoppingViewModel.showAllProducts();
+                binding.ivShowHidePurchased.setImageResource(R.drawable.ic_hide);
+            }
+            binding.ivShowHidePurchased.setImageTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.blue2)));
         });
 
+        binding.ivClearSelected.setOnClickListener(clearSelectedBtn -> {
+            isActionDelete = !isActionDelete;
+            shoppingViewModel.setIsActionDelete(isActionDelete);
+            shoppingViewModel.addSelectedProductsId(-1);
+        });
     }
 
-    /*   @Override
-       public void onProductItemClick() {
-           Toast.makeText(requireContext(), "item clicked", Toast.LENGTH_SHORT).show();
-       }
-
-   */
     @Override
     public void purchaseDoneChanged(int id) {
         purchaseConfirmDialog = new PurchaseConfirmDialog((coast, quantity) -> {
@@ -91,7 +156,7 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
     }
 
     @Override
-    public void onDeleteClicked(int id) {
-        Toast.makeText(requireContext(), "delete clicked", Toast.LENGTH_SHORT).show();
+    public void onItemClicked(int position, int productId) {
+        shoppingViewModel.addSelectedProductsId(productId);
     }
 }

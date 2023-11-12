@@ -21,11 +21,13 @@ import uz.admiraldev.noteandtodoapp.MainActivity;
 import uz.admiraldev.noteandtodoapp.models.Note;
 
 public class NotesViewModel extends ViewModel {
-    private ExecutorService myExecutor;
+    //    private ExecutorService myExecutor;
     private List<Note> notes;
     private int selectedNoteId;
     private Note selectedNote;
     private Note enteredNote;
+
+    private final ExecutorService myExecutor = Executors.newSingleThreadExecutor();
     private final MutableLiveData<List<Integer>> selectedNotesList = new MutableLiveData<>();
     private final MutableLiveData<List<Note>> notesLiveData = new MutableLiveData<>();
     private final MutableLiveData<Note> selectedNoteLiveData = new MutableLiveData<>();
@@ -33,7 +35,6 @@ public class NotesViewModel extends ViewModel {
 
     public NotesViewModel() {
         selectedNotesList.setValue(new ArrayList<>());
-        myExecutor = Executors.newSingleThreadExecutor();
     }
 
     public void setIsUpdateNote(Boolean isUpdateNote) {
@@ -56,7 +57,7 @@ public class NotesViewModel extends ViewModel {
         myExecutor.execute(() -> {
             try {
                 selectedNote = MainActivity.getNoteDatabase().noteDao().getNote(selectedNoteId);
-                new Handler(Looper.getMainLooper()).post(() -> selectedNoteLiveData.setValue(selectedNote));
+                selectedNoteLiveData.postValue(selectedNote);
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
             }
@@ -71,7 +72,7 @@ public class NotesViewModel extends ViewModel {
                     notes = MainActivity.getNoteDatabase().noteDao().getSortedNotesByDate(isASC);
                 else if (fieldName.equals("priority"))
                     notes = MainActivity.getNoteDatabase().noteDao().getSortedNotesByPriority(isASC);
-                new Handler(Looper.getMainLooper()).post(() -> notesLiveData.setValue(notes));
+                notesLiveData.postValue(notes);
             } catch (Exception e) {
                 Log.d("myTag", "getNotesLiveData error: " + e.getMessage());
             }
@@ -98,7 +99,7 @@ public class NotesViewModel extends ViewModel {
         myExecutor.execute(() -> {
             try {
                 notes = MainActivity.getNoteDatabase().noteDao().getNotes();
-                new Handler(Looper.getMainLooper()).post(() -> notesLiveData.setValue(notes));
+                notesLiveData.postValue(notes);
             } catch (Exception e) {
                 Log.d("myTag", "getNotesLiveData error: " + e.getMessage());
             }
@@ -135,7 +136,6 @@ public class NotesViewModel extends ViewModel {
         String currentDate = dateFormat.format(calendar.getTime());
         String currentTime = timeFormat.format(calendar.getTime());
         enteredNote = new Note(noteTitle, noteDescription, currentDate, currentTime, priority);
-        myExecutor = Executors.newSingleThreadExecutor();
         myExecutor.execute(() -> {
             try {
                 MainActivity.getNoteDatabase().noteDao().insert(enteredNote);

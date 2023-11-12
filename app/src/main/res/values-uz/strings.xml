@@ -50,7 +50,7 @@
 
     <string name="enter_btn_txt">Boshlash</string>
     <string name="save_btn_txt">Saqlash</string>
-    <string name="btn_lets_shop_txt">Haridga</string>
+    <string name="btn_add_to_list">Roʻyxatga qoʻshish</string>
     <string name="start_btn_txt">Boshlash</string>
     <string name="sign_up_text">Foydalanuvchi qo\'shish</string>
     <string name="add_pin_code_text">Pin kod qo\'shish</string>
@@ -133,6 +133,9 @@
     <string name="hide_completed">Bajarilganlarni yashirish</string>
     <string name="show_completed">Bajarilganlarni ko\'rsatish</string>
     <string name="select_btn_desc">Elementni tanlash uchun bosing</string>
+    <string name="product_delete_dialog_title">Tanlangan elementlarni oʻchirish davom ettirilsinmi?</string>
+    <string name="product_delete_dialog_desc">Tanlangan mahsulotlarni xaridlar roʻyxatidan o\'chirasizmi?</string>
+    <string name="purchase_dialog_title">Xarid qilish xarajatlaringizni kuzatib boring (ixtiyoriy)</string>
 
 
 </resources>

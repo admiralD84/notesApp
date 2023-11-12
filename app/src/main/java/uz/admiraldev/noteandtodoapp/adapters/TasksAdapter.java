@@ -119,17 +119,15 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
 
             editTask.setOnClickListener(taskEditView ->
-                    clickListener.taskEditBtnClicked(currentTask.getId()));
+                    clickListener.taskEditBtnClicked(currentTask.getId(), getAdapterPosition()));
 
             deleteTask.setOnClickListener(taskDeleteView ->
-                    clickListener.taskDeleteBtnClicked(itemView,
-                            currentTask.getTaskName(),
-                            currentTask.getId(),
-                            getAdapterPosition()));
+                    clickListener.taskDeleteBtnClicked(itemView, currentTask.getTaskName(),
+                            currentTask.getId(), getAdapterPosition()));
 
             isDoneCheckbox.setOnCheckedChangeListener((checkBoxView, isChecked) -> {
+                currentTask.setDone(isChecked);
                 clickListener.checkBoxChecked(currentTask.getId(), getAdapterPosition());
-                currentTask.setDone(true);
             });
         }
     }
@@ -147,7 +145,6 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
         public void bind(Task task, TaskItemClickListener clickListener) {
-
             // o'chirilgan tekst
             SpannableString spannedTaskName = new SpannableString(task.getTaskName());
             spannedTaskName.setSpan(new StrikethroughSpan(),
@@ -157,13 +154,13 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             doneTime.setText(task.getDoneTimeString());
 
             repeatTask.setOnClickListener(repeatTaskBtn ->
-                    clickListener.taskRepeatBtnClicked(task.getId()));
-            deleteTask.setOnClickListener(deleteTaskBtn -> {
-                clickListener.taskDeleteBtnClicked(itemView,
-                        task.getTaskName(),
-                        task.getId(),
-                        getAdapterPosition());
-            });
+                    clickListener.taskRepeatBtnClicked(task.getId(), getAdapterPosition()));
+
+            deleteTask.setOnClickListener(deleteTaskBtn ->
+                    clickListener.taskDeleteBtnClicked(itemView,
+                            task.getTaskName(),
+                            task.getId(),
+                            getAdapterPosition()));
 
             itemView.setOnClickListener(itemview -> {
                 if (clickListener != null) {
@@ -201,9 +198,9 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public interface TaskItemClickListener {
         void taskDeleteBtnClicked(View itemView, String taskName, int id, int position);
 
-        void taskEditBtnClicked(int id);
+        void taskEditBtnClicked(int id, int position);
 
-        void taskRepeatBtnClicked(int id);
+        void taskRepeatBtnClicked(int id, int position);
 
         void checkBoxChecked(int id, int position);
     }

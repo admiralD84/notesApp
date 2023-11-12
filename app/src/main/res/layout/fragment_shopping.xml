@@ -36,12 +36,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_filter"
+                android:id="@+id/iv_show_hide_purchased"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/iv_filter"
                 android:padding="8dp"
-                android:src="@drawable/ic_filter" />
+                android:src="@drawable/ic_hide" />
+            <ImageView
+                android:id="@+id/iv_clear_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/btn_close_desc"
+                android:padding="8dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_close" />
 
             <ImageView
                 android:id="@+id/iv_product_delete"

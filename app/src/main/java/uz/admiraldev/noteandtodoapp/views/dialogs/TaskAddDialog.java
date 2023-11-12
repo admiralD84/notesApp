@@ -32,14 +32,16 @@ public class TaskAddDialog extends DialogFragment {
     private AppCompatButton btnDone, btnNext;
     private final TasksViewModel tasksViewModel;
     TextInputEditText taskName;
-    private static boolean isUpdateTask = false;
-    private static boolean isRestoreTask = false;
+    private boolean isUpdateTask = false;
+    private boolean isRestoreTask = false;
     SimpleDateFormat dateFormat;
     private ImageView btnClose;
+    private final int position;
     public TextView addDeadlineDate, addDeadlineTime, dialogTitle, deadlineTitle;
 
 
-    public TaskAddDialog(TasksViewModel tasksViewModel) {
+    public TaskAddDialog(TasksViewModel tasksViewModel, int position) {
+        this.position = position;
         this.tasksViewModel = tasksViewModel;
     }
 
@@ -82,9 +84,9 @@ public class TaskAddDialog extends DialogFragment {
             btnNext.setVisibility(View.GONE);
             btnDone.setText(getString(R.string.edit_task_btn_text));
         } else if (isRestoreTask) {
+            Task currentTask = tasksViewModel.getCurrentTask();
             btnNext.setVisibility(View.GONE);
             dialogTitle.setText(getString(R.string.repeat_task_title));
-            Task currentTask = tasksViewModel.getCurrentTask();
             taskName.setText(currentTask.getTaskName());
             addDeadlineTime.setText(currentTask.getDeadlineTime());
             addDeadlineDate.setText(currentTask.getDeadlineDateString());
@@ -97,7 +99,7 @@ public class TaskAddDialog extends DialogFragment {
             if (taskName.getText() != null && !taskName.getText().toString().trim().isEmpty()) {
                 String tempText = taskName.getText().toString().trim();
                 if (isUpdateTask) {
-                    tasksViewModel.updateTask(tempText);
+                    tasksViewModel.updateTask(tempText, position);
                 } else {
                     addNewTask(tempText);
                 }
@@ -156,14 +158,16 @@ public class TaskAddDialog extends DialogFragment {
     }
 
     private void addNewTask(String taskName) {
+        if (isRestoreTask)
+            tasksViewModel.setShowCompletedTasks(true);
         tasksViewModel.insertTask(taskName);
     }
 
-    public static void setIsUpdateTrue() {
-        isUpdateTask = true;
+    public void setIsUpdateTrue() {
+        this.isUpdateTask = true;
     }
 
-    public static void setIsRestoreTrue() {
-        isRestoreTask = true;
+    public void setIsRestoreTrue() {
+        this.isRestoreTask = true;
     }
 }

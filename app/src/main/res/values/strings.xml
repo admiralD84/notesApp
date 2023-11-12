@@ -53,7 +53,7 @@
 
     <string name="enter_btn_txt">Enter</string>
     <string name="save_btn_txt">Save</string>
-    <string name="btn_lets_shop_txt">Let\'s buy</string>
+    <string name="btn_add_to_list">Add to list</string>
     <string name="start_btn_txt">Start</string>
     <string name="sign_up_text">Add user</string>
     <string name="add_pin_code_text">Add PIN code</string>
@@ -94,6 +94,8 @@
     <string name="edit_task_btn_text">Update</string>
     <string name="edit_task_deadline">Deadline:</string>
 
+    <string name="product_delete_dialog_desc">Are you sure you want to remove the selected products from your shopping list?</string>
+    <string name="product_delete_dialog_title">Continue deleting selected items?</string>
     <string name="note_delete_dialog_title">Do you want to delete a note?</string>
     <string name="note_delete_dialog_desc">Delete a note with the following title:</string>
     <string name="user_delete_dialog_title">Delete user?</string>
@@ -129,4 +131,5 @@
     <string name="hide_completed">Hide completed tasks</string>
     <string name="show_completed">Show completed tasks</string>
     <string name="select_btn_desc">Press to select item</string>
+    <string name="purchase_dialog_title">Track your shopping expenses (optional)</string>
 </resources>

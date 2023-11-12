@@ -29,11 +29,11 @@ import uz.admiraldev.noteandtodoapp.views.dialogs.TaskAddDialog;
 public class TasksFragment extends Fragment implements TasksAdapter.TaskItemClickListener {
     private FragmentToDoBinding binding;
     private TasksAdapter tasksAdapter;
-    private DeleteConfirmDialog deleteDialog;
-    public static TasksViewModel tasksViewModel;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    boolean isHidden;
+    private DeleteConfirmDialog deleteDialog;
+    private boolean showCompleted;
+    public static TasksViewModel tasksViewModel;
     boolean deadlineFired = true;
 
     public TasksFragment() {
@@ -41,10 +41,20 @@ public class TasksFragment extends Fragment implements TasksAdapter.TaskItemClic
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        tasksViewModel = new ViewModelProvider(requireActivity()).get(TasksViewModel.class);
+        sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        showCompleted = sharedPreferences.getBoolean("isHiddenCompleted", true);
+        tasksViewModel.setShowCompletedTasks(showCompleted);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentToDoBinding.inflate(getLayoutInflater(), container, false);
-        tasksViewModel = new ViewModelProvider(requireActivity()).get(TasksViewModel.class);
+        binding.rvTasks.setLayoutManager(new LinearLayoutManager(requireContext()));
         return binding.getRoot();
     }
 
@@ -57,40 +67,29 @@ public class TasksFragment extends Fragment implements TasksAdapter.TaskItemClic
             floatingActionButton.setVisibility(View.VISIBLE);
             requireActivity().findViewById(R.id.bottomAppBar).setVisibility(View.VISIBLE);
         }
-        sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        isHidden = sharedPreferences.getBoolean("isHiddenCompleted", false);
-        tasksViewModel.taskDefine(isHidden);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.rvTasks.setLayoutManager(new LinearLayoutManager(requireContext()));
         tasksAdapter = new TasksAdapter(this);
         tasksViewModel.tasksLiveData.observe(getViewLifecycleOwner(), tasks -> {
-            if (tasks.size() != 0) {
+            if (tasks != null && tasks.size() != 0) {
+                binding.progress.setVisibility(View.GONE);
+                binding.rvTasks.setVisibility(View.VISIBLE);
                 if (binding.tvEmptyList.getVisibility() == View.VISIBLE)
                     binding.tvEmptyList.setVisibility(View.GONE);
                 tasksAdapter.setData(tasks);
                 binding.rvTasks.setAdapter(tasksAdapter);
-                binding.progress.setVisibility(View.GONE);
-                binding.rvTasks.setVisibility(View.VISIBLE);
             } else {
                 emptyTaskList();
             }
         });
         binding.ivFilter.setOnClickListener(filterView -> {
             PopupMenu popupMenu = new PopupMenu(requireContext(), filterView);
-            if (isHidden) {
-                isHidden = false;
-                editor.putBoolean("isHiddenCompleted", false);
-                editor.apply();
+            if (showCompleted) {
                 popupMenu.inflate(R.menu.task_filter_popup_menu);
             } else {
-                isHidden = true;
-                editor.putBoolean("isHiddenCompleted", true);
-                editor.apply();
                 popupMenu.inflate(R.menu.task_filter_popup_menu2);
             }
             try {
@@ -103,16 +102,25 @@ public class TasksFragment extends Fragment implements TasksAdapter.TaskItemClic
             }
             popupMenu.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.hide_completed) {
-                    tasksViewModel.showOnlyNotCompletedTasks();
+                    showCompleted = false;
+                    editor.putBoolean("isHiddenCompleted", false);
+                    editor.apply();
+                    tasksViewModel.setShowCompletedTasks(false);
                 } else if (item.getItemId() == R.id.sort_by_deadline) {
+                    showCompleted = false;
                     deadlineFired = !deadlineFired;
                     tasksViewModel.getSortedTasks("deadlineDate", deadlineFired);
                 } else if (item.getItemId() == R.id.start_with_completed) {
+                    showCompleted = true;
                     tasksViewModel.getSortedTasks("isDone", false);
                 } else if (item.getItemId() == R.id.stat_with_not_completed) {
+                    showCompleted = true;
                     tasksViewModel.getSortedTasks("isDone", true);
                 } else if (item.getItemId() == R.id.show_completed) {
-                    tasksViewModel.showAllTasks();
+                    showCompleted = true;
+                    editor.putBoolean("isHiddenCompleted", true);
+                    editor.apply();
+                    tasksViewModel.setShowCompletedTasks(true);
                 }
                 return false;
             });
@@ -134,15 +142,15 @@ public class TasksFragment extends Fragment implements TasksAdapter.TaskItemClic
             @Override
             public void onPositiveButtonClicked() {
                 itemView.animate()
-                        .setDuration(300)
+                        .setDuration(250)
                         .translationX(-100)
                         .alpha(0)
                         .withEndAction(() -> {
                             itemView.setVisibility(View.GONE);
                             tasksViewModel.deleteTask(id, position);
-                            tasksViewModel.taskDefine(isHidden);
                         }).start();
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 deleteDialog.dismiss();
@@ -157,24 +165,23 @@ public class TasksFragment extends Fragment implements TasksAdapter.TaskItemClic
     }
 
     @Override
-    public void taskEditBtnClicked(int id) {
-        tasksViewModel.setTaskById(id);
-        TaskAddDialog addTaskDialog = new TaskAddDialog(tasksViewModel);
-        TaskAddDialog.setIsUpdateTrue();
+    public void taskEditBtnClicked(int id, int position) {
+        tasksViewModel.setCurrentTask(id);
+        TaskAddDialog addTaskDialog = new TaskAddDialog(tasksViewModel, position);
+        addTaskDialog.setIsUpdateTrue();
         addTaskDialog.show(getParentFragmentManager(), TaskAddDialog.class.toString());
     }
 
     @Override
-    public void taskRepeatBtnClicked(int id) {
-        tasksViewModel.setTaskById(id);
-        TaskAddDialog addTaskDialog = new TaskAddDialog(tasksViewModel);
-        TaskAddDialog.setIsRestoreTrue();
+    public void taskRepeatBtnClicked(int id, int position) {
+        tasksViewModel.setCurrentTask(id);
+        TaskAddDialog addTaskDialog = new TaskAddDialog(tasksViewModel, position);
+        addTaskDialog.setIsRestoreTrue();
         addTaskDialog.show(getParentFragmentManager(), TaskAddDialog.class.toString());
     }
 
     @Override
     public void checkBoxChecked(int id, int position) {
-        tasksViewModel.updateIsDoneField(id, true);
-        tasksViewModel.taskDefine(isHidden);
+        tasksViewModel.updateIsDoneField(id, true, position);
     }
 }

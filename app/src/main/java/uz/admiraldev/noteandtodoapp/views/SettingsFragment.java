@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -24,12 +25,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
-import uz.admiraldev.noteandtodoapp.MainActivity;
 import uz.admiraldev.noteandtodoapp.R;
 import uz.admiraldev.noteandtodoapp.databinding.FragmentSettingsBinding;
+import uz.admiraldev.noteandtodoapp.viewmodels.UsersViewModel;
 import uz.admiraldev.noteandtodoapp.views.dialogs.AboutAppBottomSheet;
 import uz.admiraldev.noteandtodoapp.views.dialogs.DeleteConfirmDialog;
 
@@ -39,9 +38,10 @@ public class SettingsFragment extends Fragment {
     SharedPreferences.Editor editor;
     NavController navController;
     private final String[] languages = {"🇺🇿 Uz", "🇬🇧 En", "🇷🇺 Ru"};
-    Executor myExecutor;
+    boolean userPinCodeHave = false;
     static Boolean isTouched = false;
     DeleteConfirmDialog deleteDialog;
+    private Vibrator v;
     String savedLogin;
     String oldLanguage;
 
@@ -79,13 +79,17 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(getLayoutInflater(), container, false);
         requireActivity().findViewById(R.id.bottomAppBar).setVisibility(View.GONE);
         requireActivity().findViewById(R.id.floatingActionButton).setVisibility(View.GONE);
+        UsersViewModel usersViewModel = new ViewModelProvider(requireActivity()).get(UsersViewModel.class);
+        v = (Vibrator) requireContext().getSystemService(Context.VIBRATOR_SERVICE);
         sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         oldLanguage = sharedPreferences.getString("appLanguage", Locale.getDefault().getLanguage());
         if (!sharedPreferences.getString("login", "").isEmpty()) {
             savedLogin = sharedPreferences.getString("login", "");
         }
-        myExecutor = Executors.newSingleThreadExecutor();
+        usersViewModel.checkUserPIN(savedLogin);
+        usersViewModel.getIsPinCodeEnteredLiveData()
+                .observe(getViewLifecycleOwner(), isPinCodeEntered -> userPinCodeHave = !isPinCodeEntered);
         return binding.getRoot();
     }
 
@@ -93,7 +97,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myExecutor = Executors.newSingleThreadExecutor();
         editor = sharedPreferences.edit();
         binding.switchPinCode.setChecked(sharedPreferences.getBoolean("isEnterWithPinCode", false));
         binding.tvAbout.setOnClickListener(aboutAppview -> {
@@ -132,41 +135,34 @@ public class SettingsFragment extends Fragment {
             return false;
         });
 
-
-        binding.switchPinCode.setOnCheckedChangeListener((compoundButton, checked) ->
-        {
+        binding.switchPinCode.setOnCheckedChangeListener((compoundButton, checked) -> {
             if (isTouched) {
                 isTouched = false;
-                Vibrator v = (Vibrator) requireContext().getSystemService(Context.VIBRATOR_SERVICE);
                 if (checked) {
-                    myExecutor.execute(() -> {
-                        boolean isPinCodeEntered = MainActivity.getUserDatabase().userDao().notEmptyPinCode(savedLogin, "-1");
-                        requireActivity().runOnUiThread(() -> {
-                            if (!isPinCodeEntered) {
-                                editor.putBoolean("isEnterWithPinCode", true);
-                                editor.putBoolean("isRememberedUser", false);
-                                Toast.makeText(requireContext(),
-                                        requireContext().getString(R.string.enter_with_pin),
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
-                                binding.switchPinCode.setChecked(false);
-                                Toast.makeText(requireContext(),
-                                        requireContext().getString(R.string.empty_pin),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    });
-
+                    if (userPinCodeHave) {
+                        editor.putBoolean("isEnterWithPinCode", true);
+                        editor.putBoolean("isRememberedUser", false);
+                        editor.apply();
+                        Toast.makeText(requireContext(),
+                                requireContext().getString(R.string.enter_with_pin),
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
+                        binding.switchPinCode.setChecked(false);
+                        Toast.makeText(requireContext(),
+                                requireContext().getString(R.string.empty_pin),
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     editor.putBoolean("isEnterWithPinCode", false);
+                    editor.apply();
                     Toast.makeText(requireContext(),
                             requireContext().getString(R.string.enter_with_pin_off),
                             Toast.LENGTH_SHORT).show();
                 }
-                editor.apply();
             }
         });
+
         binding.tvSelectedLanguage.setOnItemClickListener((parent, arg1, position, id) -> {
             String selectedLanguage = parent.getItemAtPosition(position).toString();
             selectedLanguage = selectedLanguage.substring(selectedLanguage.length() - 2).toLowerCase();
@@ -176,11 +172,5 @@ public class SettingsFragment extends Fragment {
                 AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(selectedLanguage));
             }
         });
-    }
-
-    @Override
-    public void onDestroy() {
-        binding.bottomNavigationViewSettings.setVisibility(View.GONE);
-        super.onDestroy();
     }
 }
