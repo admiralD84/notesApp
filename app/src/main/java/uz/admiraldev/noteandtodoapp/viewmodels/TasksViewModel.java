@@ -51,7 +51,7 @@ public class TasksViewModel extends ViewModel {
     public void getTasksList() {
         myExecutor.execute(() -> {
             try {
-                tasksList = MainActivity.getTaskDatabase().taskDao().getTasks();
+                tasksList = MainActivity.getMyAppDatabase().taskDao().getTasks();
                 new Handler(Looper.getMainLooper()).post(() -> tasksLiveData.setValue(tasksList));
             } catch (Exception e) {
                 Log.d("myTag", "getTasksList error: " + e.getMessage());
@@ -112,7 +112,7 @@ public class TasksViewModel extends ViewModel {
         tasksLiveData.setValue(tasksList);
         myExecutor.execute(() -> {
             try {
-                MainActivity.getTaskDatabase().taskDao().deleteTask(taskId);
+                MainActivity.getMyAppDatabase().taskDao().deleteTask(taskId);
             } catch (Exception e) {
                 Log.d("myTag", "delete task error: " + e.getMessage());
             }
@@ -122,7 +122,7 @@ public class TasksViewModel extends ViewModel {
     public void updateIsDoneField(int taskId, boolean isDone) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getTaskDatabase().taskDao().updateTaskDoneField(
+                MainActivity.getMyAppDatabase().taskDao().updateTaskDoneField(
                         Calendar.getInstance().getTimeInMillis(),
                         taskId,
                         isDone);
@@ -136,7 +136,7 @@ public class TasksViewModel extends ViewModel {
     public void insertTask(String taskName) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getTaskDatabase().taskDao().insert(newTaskBuilder(taskName));
+                MainActivity.getMyAppDatabase().taskDao().insert(newTaskBuilder(taskName));
             } catch (Exception e) {
                 Log.d("myTag", "insert task error: " + e.getMessage());
             }
@@ -187,7 +187,7 @@ public class TasksViewModel extends ViewModel {
         }
         myExecutor.execute(() -> {
             try {
-                MainActivity.getTaskDatabase().taskDao().updateTask(selectedTaskLiveData.getValue());
+                MainActivity.getMyAppDatabase().taskDao().updateTask(selectedTaskLiveData.getValue());
             } catch (Exception e) {
                 Log.d("myTag", "update task error: " + e.getMessage());
             }
@@ -209,9 +209,9 @@ public class TasksViewModel extends ViewModel {
         myExecutor.execute(() -> {
             try {
                 if (fieldName.equals("deadlineDate"))
-                    tasksList = MainActivity.getTaskDatabase().taskDao().getSortedTasksByDeadline(isASC);
+                    tasksList = MainActivity.getMyAppDatabase().taskDao().getSortedTasksByDeadline(isASC);
                 else if (fieldName.equals("isDone"))
-                    tasksList = MainActivity.getTaskDatabase().taskDao().getSortedTasksByIsDoneState(isASC);
+                    tasksList = MainActivity.getMyAppDatabase().taskDao().getSortedTasksByIsDoneState(isASC);
                 new Handler(Looper.getMainLooper()).post(() -> tasksLiveData.setValue(tasksList));
             } catch (Exception e) {
                 Log.d("myTag", "getNotesLiveData error: " + e.getMessage());

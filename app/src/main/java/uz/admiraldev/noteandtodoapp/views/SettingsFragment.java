@@ -140,7 +140,7 @@ public class SettingsFragment extends Fragment {
                 Vibrator v = (Vibrator) requireContext().getSystemService(Context.VIBRATOR_SERVICE);
                 if (checked) {
                     myExecutor.execute(() -> {
-                        boolean isPinCodeEntered = MainActivity.getUserDatabase().userDao().notEmptyPinCode(savedLogin, "-1");
+                        boolean isPinCodeEntered = MainActivity.getMyAppDatabase().userDao().notEmptyPinCode(savedLogin, "-1");
                         requireActivity().runOnUiThread(() -> {
                             if (!isPinCodeEntered) {
                                 editor.putBoolean("isEnterWithPinCode", true);

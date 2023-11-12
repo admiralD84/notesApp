@@ -90,7 +90,7 @@ public class SignInFragment extends Fragment {
                 enteredPassword = etPassword.getText().toString().trim();
                 try {
                     myExecutor.execute(() -> {
-                        boolean isLogged = MainActivity.getUserDatabase().userDao().isLogged(enteredLogin, enteredPassword);
+                        boolean isLogged = MainActivity.getMyAppDatabase().userDao().isLogged(enteredLogin, enteredPassword);
                         requireActivity().runOnUiThread(() -> {
                             if (isLogged) {
                                 editor.putString("login", enteredLogin);

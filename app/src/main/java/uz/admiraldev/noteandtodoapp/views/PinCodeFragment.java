@@ -147,7 +147,7 @@ public class PinCodeFragment extends Fragment {
 
     private void checkCode(String enteredCode) {
         myExecutor.execute(() -> {
-            boolean isCorrectPin = MainActivity.getUserDatabase().userDao().isLoggedPin(savedLogin, enteredCode);
+            boolean isCorrectPin = MainActivity.getMyAppDatabase().userDao().isLoggedPin(savedLogin, enteredCode);
             requireActivity().runOnUiThread(() -> {
                 if (isCorrectPin) {
                     navController.navigate(R.id.navigation_notes);

@@ -34,7 +34,7 @@ public class UsersViewModel extends ViewModel {
     public void deleteUsers(User user) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getUserDatabase().userDao().deleteUser(user);
+                MainActivity.getMyAppDatabase().userDao().deleteUser(user);
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
             }
@@ -60,7 +60,7 @@ public class UsersViewModel extends ViewModel {
     public LiveData<List<User>> getUsersLiveData() {
         myExecutor.execute(() -> {
             try {
-                users = MainActivity.getUserDatabase().userDao().getUsers();
+                users = MainActivity.getMyAppDatabase().userDao().getUsers();
                 new Handler(Looper.getMainLooper()).post(() -> usersLiveData.setValue(users));
             } catch (Exception e) {
                 Log.d("myTag", "msg: " + e.getMessage());
@@ -72,7 +72,7 @@ public class UsersViewModel extends ViewModel {
     public void saveUser(User user) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getUserDatabase().userDao().insertUser(user);
+                MainActivity.getMyAppDatabase().userDao().insertUser(user);
             } catch (Exception e) {
                 Log.d("myTag", "save user error: " + e.getMessage());
             }
@@ -83,7 +83,7 @@ public class UsersViewModel extends ViewModel {
     public LiveData<User> getUser() {
         myExecutor.execute(() -> {
             try {
-                User tempUser = MainActivity.getUserDatabase().userDao().getUserByUsername(login);
+                User tempUser = MainActivity.getMyAppDatabase().userDao().getUserByUsername(login);
                 new Handler(Looper.getMainLooper()).post(() ->
                         userLiveData.setValue(tempUser));
             } catch (Exception e) {
@@ -96,7 +96,7 @@ public class UsersViewModel extends ViewModel {
     public void updateUser(User newUser) {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getUserDatabase().userDao().updateUser(newUser);
+                MainActivity.getMyAppDatabase().userDao().updateUser(newUser);
             } catch (Exception e) {
                 Log.d("myTag", "user update error: " + e.getMessage());
             }
@@ -107,7 +107,7 @@ public class UsersViewModel extends ViewModel {
         myExecutor.execute(() -> {
             boolean result;
             try {
-                result = MainActivity.getUserDatabase().userDao().isTakenLogin(login);
+                result = MainActivity.getMyAppDatabase().userDao().isTakenLogin(login);
                 new Handler(Looper.getMainLooper()).post(() -> loginHave.setValue(result));
             } catch (Exception e) {
                 Log.d("myTag", "check login error: " + e.getMessage());

@@ -2,26 +2,24 @@ package uz.admiraldev.noteandtodoapp.views;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 import java.util.Objects;
 
 import uz.admiraldev.noteandtodoapp.R;
-import uz.admiraldev.noteandtodoapp.models.Note;
 import uz.admiraldev.noteandtodoapp.databinding.FragmentAddNoteBinding;
+import uz.admiraldev.noteandtodoapp.models.Note;
 import uz.admiraldev.noteandtodoapp.viewmodels.NotesViewModel;
 import uz.admiraldev.noteandtodoapp.views.dialogs.DeleteConfirmDialog;
 
@@ -92,9 +90,8 @@ public class AddNoteFragment extends Fragment {
 
     public void initClicks() {
 
-        binding.btnBack.setOnClickListener(btnBackView -> {
-            navController.navigate(R.id.action_addNoteFragment_to_navigation_notes);
-        });
+        binding.btnBack.setOnClickListener(btnBackView ->
+                navController.navigate(R.id.action_addNoteFragment_to_navigation_notes));
 
         binding.btnSave.setOnClickListener(view1 -> {
             noteTitle = Objects.requireNonNull(binding.etTitle.getText()).toString();
@@ -112,9 +109,8 @@ public class AddNoteFragment extends Fragment {
             }
         });
 
-        binding.ivEdit.setOnClickListener(view1 -> {
-            viewModel.setIsUpdateNote(true);
-        });
+        binding.ivEdit.setOnClickListener(view1 ->
+                viewModel.setIsUpdateNote(true));
 
         // delete btn clicked
         binding.ivDelete.setOnClickListener(view -> {
@@ -126,6 +122,7 @@ public class AddNoteFragment extends Fragment {
                     navController.popBackStack(R.id.addNoteFragment, false);
                     navController.navigate(R.id.action_addNoteFragment_to_navigation_notes);
                 }
+
                 @Override
                 public void onNegativeButtonClicked() {
                     deleteDialog.dismiss();

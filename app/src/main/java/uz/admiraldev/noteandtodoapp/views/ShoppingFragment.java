@@ -74,12 +74,6 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
 
     }
 
-    /*   @Override
-       public void onProductItemClick() {
-           Toast.makeText(requireContext(), "item clicked", Toast.LENGTH_SHORT).show();
-       }
-
-   */
     @Override
     public void purchaseDoneChanged(int id) {
         purchaseConfirmDialog = new PurchaseConfirmDialog((coast, quantity) -> {

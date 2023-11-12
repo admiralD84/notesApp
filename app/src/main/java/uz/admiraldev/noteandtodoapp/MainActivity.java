@@ -17,10 +17,7 @@ import androidx.room.Room;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import uz.admiraldev.noteandtodoapp.database.NoteDatabase;
-import uz.admiraldev.noteandtodoapp.database.ShoppingListDatabase;
-import uz.admiraldev.noteandtodoapp.database.TaskDatabase;
-import uz.admiraldev.noteandtodoapp.database.UserDatabase;
+import uz.admiraldev.noteandtodoapp.database.MyAppDatabase;
 import uz.admiraldev.noteandtodoapp.databinding.ActivityMainBinding;
 import uz.admiraldev.noteandtodoapp.views.ShoppingFragment;
 import uz.admiraldev.noteandtodoapp.views.TasksFragment;
@@ -30,12 +27,9 @@ import uz.admiraldev.noteandtodoapp.views.dialogs.TaskAddDialog;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     BottomNavigationView bottomNavigationView;
-    private static NoteDatabase noteDatabase;
     TaskAddDialog addTaskDialog;
     AddProductsToPurchaseList addProductsToPurchaseList;
-    private static TaskDatabase taskDatabase;
-    private static ShoppingListDatabase shoppingDatabase;
-    private static UserDatabase userDatabase;
+    private static MyAppDatabase myAppDatabase;
     NavController navController;
 
 
@@ -45,10 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        userDatabase = Room.databaseBuilder(this, UserDatabase.class, "users-database").build();
-        noteDatabase = Room.databaseBuilder(this, NoteDatabase.class, "note-database").build();
-        taskDatabase = Room.databaseBuilder(this, TaskDatabase.class, "task-database").build();
-        shoppingDatabase = Room.databaseBuilder(this, ShoppingListDatabase.class, "shopping-database").build();
+        myAppDatabase = Room.databaseBuilder(this, MyAppDatabase.class, "my-database").build();
 
         bottomNavigationView = binding.bottomNavigationView;
         SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -89,19 +80,8 @@ public class MainActivity extends AppCompatActivity {
         binding.floatingActionButton.setVisibility(View.GONE);
     }
 
-    public static UserDatabase getUserDatabase() {
-        return userDatabase;
+    public static MyAppDatabase getMyAppDatabase() {
+        return myAppDatabase;
     }
 
-    public static TaskDatabase getTaskDatabase() {
-        return taskDatabase;
-    }
-
-    public static NoteDatabase getNoteDatabase() {
-        return noteDatabase;
-    }
-
-    public static ShoppingListDatabase getShoppingListDatabase() {
-        return shoppingDatabase;
-    }
 }
