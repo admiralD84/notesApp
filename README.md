@@ -71,12 +71,12 @@ ___
 
 
 ## **Гифки**
-| ![overview](https://github.com/admiralD84/notesApp/blob/master/images/tasks.gif) | ![add note](https://github.com/admiralD84/notesApp/blob/master/images/add_notes.gif) |
-|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+|Locale App |![overview](https://github.com/admiralD84/notesApp/blob/master/images/tasks.gif) |      ADD NEW NOTE               | ![add note](https://github.com/admiralD84/notesApp/blob/master/images/add_notes.gif) |
+|---|-------------------------------|---------------------------------------------------|----------------------------------------------------------------------------------------|
 
 ___
-| ![add task](https://github.com/admiralD84/notesApp/blob/master/images/add_tasks.gif) | ![mark product purchased](https://github.com/admiralD84/notesApp/blob/master/images/product_purchase.gif) |
-|------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+|ADD NEW TASK| ![add task](https://github.com/admiralD84/notesApp/blob/master/images/add_tasks.gif) |ADD NEW PRODUCT| ![mark product purchased](https://github.com/admiralD84/notesApp/blob/master/images/product_purchase.gif) |
+|-----|----------------------------------------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------|
 
 
 ### **Разработчик:** Анвар Ахмедов
