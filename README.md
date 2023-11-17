@@ -61,7 +61,7 @@ ___
 ___
 ___
 ## **Фотки**
-![tasks](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-31.jpg, "Tasks page")
+![tasks](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-31.jpg)
 ![products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-32.jpg, "Shopping list")
 ![add products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-28.jpg, "Add new products")
 ![tasks menu](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-13.jpg, "Task page menu")
