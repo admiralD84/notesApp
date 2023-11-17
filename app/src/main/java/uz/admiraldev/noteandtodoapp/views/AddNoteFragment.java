@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,13 +25,13 @@ import uz.admiraldev.noteandtodoapp.viewmodels.NotesViewModel;
 import uz.admiraldev.noteandtodoapp.views.dialogs.DeleteConfirmDialog;
 
 public class AddNoteFragment extends Fragment {
-    FragmentAddNoteBinding binding;
-    NavController navController;
-    int priority = 3;
-    String noteTitle, noteDescription;
+    private FragmentAddNoteBinding binding;
+    private NavController navController;
+    private int priority = 3;
+    private String noteTitle, noteDescription;
     NotesViewModel viewModel;
     DeleteConfirmDialog deleteDialog;
-    private Boolean isReadOnly = false;
+    private Boolean isLoadSelectedNote = false;
     private Boolean isUpdate = false;
 
 
@@ -51,19 +52,18 @@ public class AddNoteFragment extends Fragment {
         binding = FragmentAddNoteBinding.inflate(getLayoutInflater(), container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(NotesViewModel.class);
         navController = NavHostFragment.findNavController(this);
-        if (viewModel.getSelectedNoteId() != -1)
-            isReadOnly = true;
+        if (viewModel.getReadOnlyMode() || viewModel.getEditMode())
+            isLoadSelectedNote = true;
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (isReadOnly) {
-            viewModel.getNoteLiveData().observe(getViewLifecycleOwner(), note -> {
+        if (isLoadSelectedNote) {
+            viewModel.selectedNoteLiveData.observe(getViewLifecycleOwner(), note -> {
                 if (note != null) {
-                    readNoteView(note);
-                    viewModel.getIsUpdateNote().observe(getViewLifecycleOwner(), isUpdateNote -> {
+                    viewModel.isUpdateNote.observe(getViewLifecycleOwner(), isUpdateNote -> {
                         if (isUpdateNote) {
                             setNote(note);
                             binding.ivDelete.setVisibility(View.GONE);
@@ -74,12 +74,12 @@ public class AddNoteFragment extends Fragment {
                             binding.readLayout.setVisibility(View.GONE);
                             binding.editLayout.setVisibility(View.VISIBLE);
                             isUpdate = true;
-                        }
+                        } else
+                            readNoteView(note);
                     });
                 }
             });
         } else {
-
             binding.etTitle.requestFocus();
             // focus o'rnatilganidan keyin klaviaturani ochib beradi
             InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -93,10 +93,18 @@ public class AddNoteFragment extends Fragment {
         binding.btnBack.setOnClickListener(btnBackView ->
                 navController.navigate(R.id.action_addNoteFragment_to_navigation_notes));
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        navController.popBackStack();
+                        navController.navigate(R.id.navigation_notes);
+                    }
+                });
+
         binding.btnSave.setOnClickListener(view1 -> {
             noteTitle = Objects.requireNonNull(binding.etTitle.getText()).toString();
             noteDescription = Objects.requireNonNull(binding.etSubtitle.getText()).toString();
-
             if (!noteTitle.isEmpty() && !noteDescription.isEmpty()) {
                 if (isUpdate)
                     viewModel.updateNote(noteTitle, noteDescription, priority);
@@ -109,7 +117,7 @@ public class AddNoteFragment extends Fragment {
             }
         });
 
-        binding.ivEdit.setOnClickListener(view1 -> viewModel.setIsUpdateNote(true));
+        binding.ivEdit.setOnClickListener(view1 -> viewModel.setEditMode(true));
 
         // delete btn clicked
         binding.ivDelete.setOnClickListener(view -> {
@@ -158,7 +166,6 @@ public class AddNoteFragment extends Fragment {
         binding.btnSave.setVisibility(View.GONE);
         binding.ivDelete.setVisibility(View.VISIBLE);
         binding.ivEdit.setVisibility(View.VISIBLE);
-
         binding.tvPriority.setVisibility(View.GONE);
         binding.rgPriority.setVisibility(View.GONE);
         binding.editLayout.setVisibility(View.GONE);
@@ -168,7 +175,8 @@ public class AddNoteFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        viewModel.setIsUpdateNote(false);
-        viewModel.setSelectedNoteId(-1);
+        viewModel.setReadOnlyMode(false);
+        viewModel.clearSelectedNotesList();
+        viewModel.setEditMode(false);
     }
 }

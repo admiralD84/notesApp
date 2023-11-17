@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -41,7 +42,7 @@ public class SettingsFragment extends Fragment {
     boolean userPinCodeHave = false;
     static Boolean isTouched = false;
     DeleteConfirmDialog deleteDialog;
-    private Vibrator v;
+    private Vibrator vibrator;
     String savedLogin;
     String oldLanguage;
 
@@ -80,7 +81,7 @@ public class SettingsFragment extends Fragment {
         requireActivity().findViewById(R.id.bottomAppBar).setVisibility(View.GONE);
         requireActivity().findViewById(R.id.floatingActionButton).setVisibility(View.GONE);
         UsersViewModel usersViewModel = new ViewModelProvider(requireActivity()).get(UsersViewModel.class);
-        v = (Vibrator) requireContext().getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) requireContext().getSystemService(Context.VIBRATOR_SERVICE);
         sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         oldLanguage = sharedPreferences.getString("appLanguage", Locale.getDefault().getLanguage());
@@ -107,27 +108,30 @@ public class SettingsFragment extends Fragment {
                 navController.navigate(R.id.action_navigation_settings_to_usersListFragment));
 
         binding.tvDeleteLogin.setOnClickListener(view1 -> {
+            String tempLogin = sharedPreferences.getString("login", "");
+            if (!tempLogin.isEmpty()) {
+                deleteDialog = new DeleteConfirmDialog(new DeleteConfirmDialog.ClickListener() {
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        editor.putString("login", null);
+                        editor.putString("pwd", null);
+                        editor.putBoolean("isRememberedUser", false);
+                        editor.apply();
+                    }
 
-            deleteDialog = new DeleteConfirmDialog(new DeleteConfirmDialog.ClickListener() {
-                @Override
-                public void onPositiveButtonClicked() {
-                    editor.putString("login", null);
-                    editor.putString("pwd", null);
-                    editor.putBoolean("isRememberedUser", false);
-                    editor.apply();
-                }
-
-                @Override
-                public void onNegativeButtonClicked() {
-                    deleteDialog.dismiss();
-                }
-            });
-            deleteDialog.setAlertTitle(getString(R.string.login_delete_dialog_title));
-            deleteDialog.setAlertMessage(getString(R.string.login_delete_dialog_desc));
-            deleteDialog.setVisibilityPositiveBtn(true);
-            deleteDialog.setVisibilityNegativeBtn(true);
-            deleteDialog.show(requireActivity().getSupportFragmentManager(),
-                    DeleteConfirmDialog.class.toString());
+                    @Override
+                    public void onNegativeButtonClicked() {
+                        deleteDialog.dismiss();
+                    }
+                });
+                deleteDialog.setAlertTitle(getString(R.string.login_delete_dialog_title));
+                deleteDialog.setAlertMessage(getString(R.string.login_delete_dialog_desc));
+                deleteDialog.setVisibilityPositiveBtn(true);
+                deleteDialog.setVisibilityNegativeBtn(true);
+                deleteDialog.show(requireActivity().getSupportFragmentManager(),
+                        DeleteConfirmDialog.class.toString());
+            } else
+                Toast.makeText(requireContext(), getText(R.string.not_saved_user), Toast.LENGTH_SHORT).show();
         });
 
         binding.switchPinCode.setOnTouchListener((pinSwitch, motionEvent) -> {
@@ -147,7 +151,7 @@ public class SettingsFragment extends Fragment {
                                 requireContext().getString(R.string.enter_with_pin),
                                 Toast.LENGTH_SHORT).show();
                     } else {
-                        v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
+                        vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
                         binding.switchPinCode.setChecked(false);
                         Toast.makeText(requireContext(),
                                 requireContext().getString(R.string.empty_pin),
@@ -172,5 +176,14 @@ public class SettingsFragment extends Fragment {
                 AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(selectedLanguage));
             }
         });
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        navController.popBackStack(R.id.navigation_notes, true);
+                        navController.navigate(R.id.navigation_notes);
+                    }
+                });
     }
 }

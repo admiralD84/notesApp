@@ -1,8 +1,9 @@
 package uz.admiraldev.noteandtodoapp.viewmodels;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -19,48 +20,50 @@ import uz.admiraldev.noteandtodoapp.MainActivity;
 import uz.admiraldev.noteandtodoapp.models.Note;
 
 public class NotesViewModel extends ViewModel {
-    //    private ExecutorService myExecutor;
     private List<Note> notes;
-    private int selectedNoteId;
     private Note selectedNote;
     private Note enteredNote;
-
+    private boolean readOnlyMode = false;
     private final ExecutorService myExecutor = Executors.newSingleThreadExecutor();
-    private final MutableLiveData<List<Integer>> selectedNotesList = new MutableLiveData<>();
-    private final MutableLiveData<List<Note>> notesLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Note> selectedNoteLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> isUpdateNote = new MutableLiveData<>();
+    public MutableLiveData<List<Integer>> selectedNotesList = new MutableLiveData<>();
+    public MutableLiveData<List<Note>> notesLiveData = new MutableLiveData<>();
+    public final MutableLiveData<Note> selectedNoteLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isUpdateNote = new MutableLiveData<>();
 
-    public NotesViewModel() {
-        selectedNotesList.setValue(new ArrayList<>());
+    public boolean getReadOnlyMode() {
+        return readOnlyMode;
     }
 
-    public void setIsUpdateNote(Boolean isUpdateNote) {
+    public boolean getEditMode() {
+        if (isUpdateNote.getValue() != null)
+            return isUpdateNote.getValue();
+        else
+            return false;
+    }
+
+    public void setReadOnlyMode(boolean isReadOnly) {
+        this.readOnlyMode = isReadOnly;
+    }
+
+    public void setEditMode(Boolean isUpdateNote) {
         this.isUpdateNote.setValue(isUpdateNote);
     }
 
-    public MutableLiveData<Boolean> getIsUpdateNote() {
-        return isUpdateNote;
+    public void setSelectedNote(int position) {
+        selectedNoteLiveData.setValue(notes.get(position));
+        selectedNote = notes.get(position);
     }
 
-    public int getSelectedNoteId() {
-        return selectedNoteId;
-    }
-
-    public void setSelectedNoteId(int selectedNoteId) {
-        this.selectedNoteId = selectedNoteId;
-    }
-
-    public LiveData<Note> getNoteLiveData() {
+    // bazadan hamma qaydlarni o'qish
+    public void getNotesFromDB() {
         myExecutor.execute(() -> {
             try {
-                selectedNote = MainActivity.getAppDataBase().noteDao().getNote(selectedNoteId);
-                selectedNoteLiveData.postValue(selectedNote);
+                notes = MainActivity.getAppDataBase().noteDao().getNotes();
+                notesLiveData.postValue(notes);
             } catch (Exception e) {
-                Log.d("myTag", "msg: " + e.getMessage());
+                Log.d("myTag", "getNotesLiveData error: " + e.getMessage());
             }
         });
-        return selectedNoteLiveData;
     }
 
     public void getSortedNoteList(String fieldName, boolean isASC) {
@@ -77,32 +80,21 @@ public class NotesViewModel extends ViewModel {
         });
     }
 
-
-    public LiveData<List<Integer>> getSelectedNotesList() {
-        return selectedNotesList;
+    public void clearSelectedNotesList() {
+        selectedNotesList.setValue(new ArrayList<>());
     }
-
 
     // tanlangan qaydlarni id sini listga qo'shib borish
     public void addSelectedNoteId(int noteId) {
-        if (Objects.requireNonNull(selectedNotesList.getValue()).contains(noteId)) {
-            selectedNotesList.getValue().remove(Integer.valueOf(noteId));
-        } else {
+        if (selectedNotesList.getValue() == null) {
+            selectedNotesList.setValue(new ArrayList<>());
             selectedNotesList.getValue().add(noteId);
+        } else {
+            if (selectedNotesList.getValue().contains(noteId))
+                selectedNotesList.getValue().remove(Integer.valueOf(noteId));
+            else
+                selectedNotesList.getValue().add(noteId);
         }
-    }
-
-    // bazadan hamma qaydlarni o'qish
-    public LiveData<List<Note>> getNotesLiveData() {
-        myExecutor.execute(() -> {
-            try {
-                notes = MainActivity.getAppDataBase().noteDao().getNotes();
-                notesLiveData.postValue(notes);
-            } catch (Exception e) {
-                Log.d("myTag", "getNotesLiveData error: " + e.getMessage());
-            }
-        });
-        return notesLiveData;
     }
 
     public void updateNote(String noteTitle, String noteDescription, int priority) {
@@ -155,7 +147,11 @@ public class NotesViewModel extends ViewModel {
     public void deleteNoteById() {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getAppDataBase().noteDao().deleteNote(selectedNoteId);
+                MainActivity.getAppDataBase().noteDao().delete(selectedNote);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    getNotesFromDB();
+                    clearSelectedNotesList();
+                });
             } catch (Exception e) {
                 Log.d("myTag", "delete note error: " + e.getMessage());
             }
@@ -165,7 +161,12 @@ public class NotesViewModel extends ViewModel {
     public void deleteNotesByIds() {
         myExecutor.execute(() -> {
             try {
-                MainActivity.getAppDataBase().noteDao().deleteItemByIds((ArrayList<Integer>) selectedNotesList.getValue());
+                MainActivity.getAppDataBase().noteDao()
+                        .deleteItemByIds((ArrayList<Integer>) selectedNotesList.getValue());
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    getNotesFromDB();
+                    clearSelectedNotesList();
+                });
             } catch (Exception e) {
                 Log.d("myTag", "delete notes error: " + e.getMessage());
             }
@@ -176,5 +177,16 @@ public class NotesViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         myExecutor.shutdown();
+    }
+
+    public void searchNotes(String searchNoteText) {
+        myExecutor.execute(() -> {
+            try {
+                List<Note> findNotes = MainActivity.getAppDataBase().noteDao().findNotes(searchNoteText);
+                notesLiveData.postValue(findNotes);
+            } catch (Exception e) {
+                Log.d("myTag", "getAllNotes error: " + e.getMessage());
+            }
+        });
     }
 }

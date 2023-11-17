@@ -25,12 +25,12 @@ import uz.admiraldev.noteandtodoapp.views.dialogs.AddProductsToPurchaseList;
 import uz.admiraldev.noteandtodoapp.views.dialogs.TaskAddDialog;
 
 public class MainActivity extends AppCompatActivity {
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
     BottomNavigationView bottomNavigationView;
     private static MyAppDataBase appDataBase;
-    TaskAddDialog addTaskDialog;
-    AddProductsToPurchaseList addProductsToPurchaseList;
-    NavController navController;
+    private TaskAddDialog addTaskDialog;
+    private AddProductsToPurchaseList addProductsToPurchaseList;
+    private NavController navController;
 
 
     @Override
@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        appDataBase = Room.databaseBuilder(this, MyAppDataBase.class, "app-database").build();
+        appDataBase = Room.databaseBuilder(this, MyAppDataBase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
 
         bottomNavigationView = binding.bottomNavigationView;
         SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);

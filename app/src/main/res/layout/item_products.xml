@@ -22,7 +22,7 @@
         android:id="@+id/tv_product_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:textAppearance="@style/buy_items_style"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chb_purchase_done"

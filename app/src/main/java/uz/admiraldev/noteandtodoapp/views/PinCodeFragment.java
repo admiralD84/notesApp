@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -47,7 +48,9 @@ public class PinCodeFragment extends Fragment {
         editor = sharedPreferences.edit();
         navController = NavHostFragment.findNavController(this);
         if (sharedPreferences.getString("login", "").isEmpty()) {
-            navController.navigate(R.id.signInFragment);
+            navController.navigate(R.id.action_pinCodeFragment_to_signInFragment);
+            editor.putBoolean("isEnterWithPinCode", false);
+            editor.apply();
         } else
             savedLogin = sharedPreferences.getString("login", "");
         myExecutor = Executors.newSingleThreadExecutor();
@@ -66,6 +69,7 @@ public class PinCodeFragment extends Fragment {
             if (getActivity() != null)
                 getActivity().finish();
         });
+
         binding.btn1.setOnClickListener(btn1View -> {
             enteredNumberCount++;
             enteredCode += "1";
@@ -150,7 +154,7 @@ public class PinCodeFragment extends Fragment {
             boolean isCorrectPin = MainActivity.getAppDataBase().userDao().isLoggedPin(savedLogin, enteredCode);
             requireActivity().runOnUiThread(() -> {
                 if (isCorrectPin) {
-                    navController.navigate(R.id.navigation_notes);
+                    navController.navigate(R.id.action_pinCodeFragment_to_navigation_notes);
                 } else {
                     Toast.makeText(requireContext(), "Incorrect PIN code:" + enteredCode, Toast.LENGTH_SHORT).show();
                     Vibrator v = (Vibrator) requireContext().getSystemService(Context.VIBRATOR_SERVICE);

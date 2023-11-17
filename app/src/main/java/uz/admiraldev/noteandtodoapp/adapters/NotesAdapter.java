@@ -50,7 +50,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         String addedTimes = note.getAddedTime();
         holder.addedDay.setText(addedDays);
         holder.addedTime.setText(addedTimes);
-        notesViewModel.getSelectedNotesList().observeForever(selectedNotes -> {
+        notesViewModel.selectedNotesList.observeForever(selectedNotes -> {
             if (selectedNotes.isEmpty()) {
                 holder.itemCheckmark.setVisibility(View.GONE);
                 holder.priorityMarker.setVisibility(View.VISIBLE);

@@ -37,6 +37,7 @@
     <string name="hint_login">Login</string>
     <string name="hint_coast">Purchase price</string>
     <string name="hint_quantity">Quantity</string>
+    <string name="hint_search">Enter text</string>
 
     <string name="task_name">Task name</string>
     <string name="hint_add_note_title">Title</string>
@@ -132,4 +133,5 @@
     <string name="show_completed">Show completed tasks</string>
     <string name="select_btn_desc">Press to select item</string>
     <string name="purchase_dialog_title">Track your shopping expenses (optional)</string>
+    <string name="not_saved_user">There is no saved user</string>
 </resources>

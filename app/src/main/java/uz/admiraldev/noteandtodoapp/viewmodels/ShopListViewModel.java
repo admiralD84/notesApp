@@ -18,19 +18,17 @@ import uz.admiraldev.noteandtodoapp.MainActivity;
 import uz.admiraldev.noteandtodoapp.models.ShoppingList;
 
 public class ShopListViewModel extends ViewModel {
-    private final ExecutorService myExecutor;
+    private final ExecutorService myExecutor = Executors.newSingleThreadExecutor();
     private List<ShoppingList> shoppingList;
-    private List<ShoppingList> purchasedProductsList;
-    private List<ShoppingList> allProductsList;
+    private boolean showPurchasedProducts;
     public MutableLiveData<List<ShoppingList>> shoppingListLive = new MutableLiveData<>();
     private final MutableLiveData<List<Integer>> selectedProducts = new MutableLiveData<>();
     public MutableLiveData<Boolean> isActionDelete = new MutableLiveData<>();
 
     public ShopListViewModel() {
-        this.myExecutor = Executors.newSingleThreadExecutor();
         isActionDelete.setValue(false);
         selectedProducts.setValue(new ArrayList<>());
-        getShoppingList();
+        getAllProducts();
     }
 
     public int getSelectedProductsCount() {
@@ -38,18 +36,6 @@ public class ShopListViewModel extends ViewModel {
             return 0;
         else
             return selectedProducts.getValue().size();
-    }
-
-    public void hidePurchasedProducts() {
-        purchasedProductsList = new ArrayList<>();
-        allProductsList = new ArrayList<>();
-        allProductsList.addAll(Objects.requireNonNull(shoppingListLive.getValue()));
-        shoppingList.forEach(product -> {
-            if (!product.isDone()) {
-                purchasedProductsList.add(product);
-            }
-        });
-        shoppingListLive.setValue(purchasedProductsList);
     }
 
     public void addSelectedProductsId(int noteId) {
@@ -64,65 +50,104 @@ public class ShopListViewModel extends ViewModel {
         }
     }
 
-    public void deleteSelectedProducts(boolean isHidden){
-        if(isHidden){
-            purchasedProductsList.remove(selectedProducts.getValue());
-        }
-        myExecutor.execute(() -> {
-            try {
-                MainActivity.getAppDataBase().shoppingListDao()
-                        .deleteItemByIds((ArrayList<Integer>) selectedProducts.getValue());
-                new Handler(Looper.getMainLooper()).post(() ->
-                        Objects.requireNonNull(selectedProducts.getValue()).clear());
-            } catch (Exception e) {
-                Log.d("myTag", "delete products error: " + e.getMessage());
-            }
-        });
-    }
-    public void showAllProducts() {
-        shoppingListLive.setValue(allProductsList);
-    }
-
     public void setIsActionDelete(Boolean isActionDelete) {
         this.isActionDelete.setValue(isActionDelete);
     }
 
-    public void updateIsDoneField(int productId, boolean isDone, String quantity, String price) {
+    public void updateIsDoneField(int productId, String quantity, String price) {
         myExecutor.execute(() -> {
             try {
                 MainActivity.getAppDataBase().shoppingListDao().updateProductPurchaseState(
-                        productId,
-                        Calendar.getInstance().getTimeInMillis(),
-                        isDone,
-                        price,
-                        quantity);
+                        productId, Calendar.getInstance().getTimeInMillis(), true,
+                        price, quantity);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    for (ShoppingList product : shoppingList) {
+                        if (product.getId() == productId) {
+                            product.setDone(true);
+                            product.setCost(price);
+                            product.setQuantity(quantity);
+                        }
+                    }
+                });
+                shoppingListLive.postValue(new ArrayList<>(shoppingList));
             } catch (Exception e) {
-                Log.d("myTag", "delete task error: " + e.getMessage());
+                Log.d("myTag", "Mark product is purchased error: " + e.getMessage());
             }
         });
-        getShoppingList();
     }
 
-    public void getShoppingList() {
+    public void getAllProducts() {
         myExecutor.execute(() -> {
             try {
-                shoppingList = MainActivity.getAppDataBase().shoppingListDao().getShoppingList();
-                shoppingListLive.postValue(shoppingList);
+                List<ShoppingList> fetchedProducts = MainActivity.getAppDataBase().shoppingListDao().getShoppingList();
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    shoppingList = fetchedProducts;
+                    filteredProducts(shoppingList);
+                });
             } catch (Exception e) {
-                Log.d("myTag", "getShoppingList error: " + e.getMessage());
+                Log.d("myTag", "getAllTasks exception : " + e.getMessage());
             }
         });
+    }
+
+    private void filteredProducts(List<ShoppingList> products) {
+        if (showPurchasedProducts) {
+            shoppingListLive.setValue(products);
+        } else {
+            List<ShoppingList> notPurchasedProducts = new ArrayList<>();
+            for (ShoppingList product : products) {
+                if (!product.isDone()) {
+                    notPurchasedProducts.add(product);
+                }
+            }
+            shoppingListLive.setValue(notPurchasedProducts);
+        }
+    }
+
+    public void setShowPurchasedProducts(boolean showPurchasedProducts) {
+        this.showPurchasedProducts = showPurchasedProducts;
+        if (shoppingList == null) {
+            getAllProducts();
+        } else {
+            filteredProducts(shoppingList);
+        }
     }
 
     public void insertProduct(String productName) {
+        ShoppingList newProduct = new ShoppingList(productName, "", "",
+                Calendar.getInstance().getTimeInMillis(), false);
         myExecutor.execute(() -> {
-            ShoppingList newProduct = new ShoppingList(productName, "", "",
-                    Calendar.getInstance().getTimeInMillis(), false);
             try {
                 MainActivity.getAppDataBase().shoppingListDao().insertProduct(newProduct);
+                new Handler(Looper.getMainLooper()).post(this::getAllProducts);
             } catch (Exception e) {
                 Log.d("myTag", "insert task error: " + e.getMessage());
             }
         });
+    }
+
+    public void deleteSelectedProducts() {
+        if (selectedProducts.getValue() != null && selectedProducts.getValue().size() > 0) {
+            List<Integer> selectedProductsId = selectedProducts.getValue();
+            shoppingList.removeIf(product -> selectedProductsId.contains(product.getId()));
+            myExecutor.execute(() -> {
+                try {
+                    MainActivity.getAppDataBase().shoppingListDao()
+                            .deleteItemByIds((ArrayList<Integer>) selectedProducts.getValue());
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        filteredProducts(shoppingList);
+                        selectedProducts.getValue().clear();
+                    });
+                } catch (Exception e) {
+                    Log.d("myTag", "delete products error: " + e.getMessage());
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        myExecutor.shutdown();
     }
 }

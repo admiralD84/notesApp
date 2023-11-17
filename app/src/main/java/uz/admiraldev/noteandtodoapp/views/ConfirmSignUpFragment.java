@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -40,17 +41,26 @@ public class ConfirmSignUpFragment extends Fragment {
             usersViewModel.getUser().observe(getActivity(), savedUser -> {
                 if (savedUser != null) {
                     String tempText = "'" + savedUser.getUsername() + "' " +
-                            getResources().getString(R.string.add_user_done) +
+                            requireContext().getString(R.string.add_user_done) +
                             "\n\n" +
                             "Login: " + savedUser.getUsername() +
                             "\nPassword: " + savedUser.getPassword() +
-                            "\n\n" + getResources().getString(R.string.add_user_done2);
+                            "\n\n" + requireContext().getString(R.string.add_user_done2);
                     binding.tvDone.setText(tempText);
                 }
             });
         }
         binding.btnStart.setOnClickListener(view1 ->
-            navController.navigate(R.id.action_afterSignUpFragment_to_signInFragment));
+                navController.navigate(R.id.action_afterSignUpFragment_to_signInFragment));
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        navController.popBackStack();
+                        navController.navigate(R.id.signInFragment);
+                    }
+                });
     }
 
 }

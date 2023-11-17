@@ -27,7 +27,7 @@ import uz.admiraldev.noteandtodoapp.viewmodels.UsersViewModel;
 public class SignInFragment extends Fragment {
     FragmentSignInBinding binding;
     UsersViewModel usersViewModel;
-    Executor myExecutor;
+    Executor myExecutor = Executors.newSingleThreadExecutor();
     NavController navController;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -45,9 +45,7 @@ public class SignInFragment extends Fragment {
         sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         navController = NavHostFragment.findNavController(this);
         if (sharedPreferences.getBoolean("isEnterWithPinCode", false))
-            navController.navigate(R.id.pinCodeFragment);
-//        else
-//            binding.ivPinCode.setEnabled(false);
+            navController.navigate(R.id.action_signInFragment_to_pinCodeFragment);
         if (sharedPreferences.getBoolean("isRememberedUser", false)) {
             navController.navigate(R.id.action_signInFragment_to_noteFragment);
         }
@@ -80,13 +78,11 @@ public class SignInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         etLogin = binding.etLogin;
         etPassword = binding.etPassword;
-
-        myExecutor = Executors.newSingleThreadExecutor();
         editor = sharedPreferences.edit();
 
         // add user button Clicked
-        binding.tvAddUser.setOnClickListener(
-                view1 -> navController.navigate(R.id.action_signInFragment_to_signUpFragment)
+        binding.tvAddUser.setOnClickListener(view1 ->
+                navController.navigate(R.id.action_signInFragment_to_signUpFragment)
         );
 
         // Enter button Clicked
@@ -128,9 +124,11 @@ public class SignInFragment extends Fragment {
                 isRememberLogin = isChecked
         );
         binding.ivPinCode.setOnClickListener(view1 -> {
-            editor.putBoolean("isEnterWithPinCode", true);
-            editor.apply();
-            navController.navigate(R.id.action_signInFragment_to_pinCodeFragment);
+            if (sharedPreferences.getBoolean("isEnterWithPinCode", false)) {
+                navController.navigate(R.id.action_signInFragment_to_pinCodeFragment);
+            } else {
+                Toast.makeText(requireContext(), getText(R.string.not_saved_user), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

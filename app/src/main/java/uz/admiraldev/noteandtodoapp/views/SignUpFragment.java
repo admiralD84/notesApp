@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -25,6 +26,7 @@ import uz.admiraldev.noteandtodoapp.viewmodels.UsersViewModel;
 public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding binding;
     private EditText etLogin, etPassword, etPinCode;
+    NavController navController;
     private UsersViewModel usersViewModel;
     private Drawable[] drawables;
     private AppCompatTextView addPinCode;
@@ -49,7 +51,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // initialize
-        NavController navController = NavHostFragment.findNavController(this);
+        navController = NavHostFragment.findNavController(this);
         usersViewModel = new ViewModelProvider(requireActivity()).get(UsersViewModel.class);
         addPinCode = binding.tvAddPinCode;
         etLogin = binding.etLogin;
@@ -65,17 +67,18 @@ public class SignUpFragment extends Fragment {
                 binding.etPinCode.setText(user.getPinCode());
         }
 
-
         // initialize
         binding.btnBack.setOnClickListener(view1 -> {
-            if (isActionEdit) {
-                navController.popBackStack(R.id.signUpFragment, true);
-                navController.navigate(R.id.usersListFragment);
-            } else {
-                navController.popBackStack(R.id.signUpFragment, true);
-                navController.navigate(R.id.signInFragment);
-            }
+            onBack();
         });
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        onBack();
+                    }
+                });
 
         binding.btnSave.setOnClickListener(userSaveView -> {
             if (etLogin.getText() != null && etPassword.getText() != null) {
@@ -180,6 +183,16 @@ public class SignUpFragment extends Fragment {
 
     public static void setActionEdit() {
         isActionEdit = true;
+    }
+
+    private void onBack() {
+        if (isActionEdit) {
+            navController.popBackStack(R.id.signUpFragment, true);
+            navController.navigate(R.id.usersListFragment);
+        } else {
+            navController.popBackStack(R.id.signUpFragment, true);
+            navController.navigate(R.id.signInFragment);
+        }
     }
 
     @Override

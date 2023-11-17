@@ -1,6 +1,7 @@
 package uz.admiraldev.noteandtodoapp.database.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -16,8 +17,14 @@ public interface NoteDao {
     @Insert
     void insert(Note notes);
 
+    @Delete
+    void delete(Note note);
+
     @Query("SELECT * FROM notes ORDER BY addedDate DESC, addedTime DESC")
     List<Note> getNotes();
+
+    @Query("SELECT * FROM notes WHERE notesTitle LIKE '%' || :search || '%' OR notesSubtitle LIKE '%' || :search || '%'")
+    List<Note> findNotes(String search);
 
     /*
      * Sort qilganda Order by field_name1, field_name2 qilinsa ikkita ustun bo'yicha saralab beradi
@@ -34,14 +41,8 @@ public interface NoteDao {
             " CASE WHEN :isAsc = 0 THEN addedTime END DESC")
     List<Note> getSortedNotesByDate(boolean isAsc);
 
-    @Query("SELECT * FROM notes WHERE id = :id")
-    Note getNote(int id);
-
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateNote(Note note);
-
-    @Query("DELETE FROM notes WHERE id = :id")
-    void deleteNote(int id);
 
     @Query("DELETE FROM notes WHERE id IN (:ids)")
     void deleteItemByIds(ArrayList<Integer> ids);

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -55,6 +56,14 @@ public class UsersListFragment extends Fragment implements UsersAdapter.UserItem
         });
         binding.btnBack.setOnClickListener(usersListView ->
                 navController.navigate(R.id.action_usersListFragment_to_navigation_settings));
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        navController.popBackStack();
+                        navController.navigate(R.id.navigation_settings);
+                    }
+                });
     }
 
     @Override

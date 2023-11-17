@@ -67,7 +67,7 @@ public class AddProductsToPurchaseList extends BottomSheetDialogFragment {
     private void saveData(String productName) {
         if (!productName.isEmpty()) {
             viewModel.insertProduct(productName);
-            viewModel.getShoppingList();
+            viewModel.getAllProducts();
             binding.etProducts.setText("");
         } else {
             Toast.makeText(requireContext(), requireContext().getString(R.string.empty_product_name),

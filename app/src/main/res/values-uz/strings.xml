@@ -136,6 +136,8 @@
     <string name="product_delete_dialog_title">Tanlangan elementlarni oʻchirish davom ettirilsinmi?</string>
     <string name="product_delete_dialog_desc">Tanlangan mahsulotlarni xaridlar roʻyxatidan o\'chirasizmi?</string>
     <string name="purchase_dialog_title">Xarid qilish xarajatlaringizni kuzatib boring (ixtiyoriy)</string>
+    <string name="not_saved_user">Foydalanuvchi saqlanmagan</string>
+    <string name="hint_search">Matn kiriting</string>
 
 
 </resources>

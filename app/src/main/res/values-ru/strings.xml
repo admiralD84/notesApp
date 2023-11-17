@@ -111,4 +111,6 @@
     <string name="product_delete_dialog_title">Продолжить удаление выбранных элементов?</string>
     <string name="product_delete_dialog_desc">Вы уверены, что хотите удалить выбранные товары из списка покупок?</string>
     <string name="purchase_dialog_title">Отслеживайте свои расходы на покупки (необязательно)</string>
+    <string name="not_saved_user">Нет сохраненного пользователя</string>
+    <string name="hint_search">Введите текст</string>
 </resources>

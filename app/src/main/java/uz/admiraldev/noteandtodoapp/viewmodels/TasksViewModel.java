@@ -90,36 +90,25 @@ public class TasksViewModel extends ViewModel {
         myExecutor.execute(() -> {
             try {
                 MainActivity.getAppDataBase().taskDao().insert(newTask);
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    List<Task> localTasksList = tasksLiveData.getValue();
-                    if (localTasksList == null) {
-                        localTasksList = new ArrayList<>();
-                        localTasksList.add(newTask);
-                    } else
-                        localTasksList.add(newTask);
-                    filteredTasks(localTasksList);
-                });
+                new Handler(Looper.getMainLooper()).post(this::getAllTasks);
             } catch (Exception e) {
                 Log.d("myTag", "insert task error: " + e.getMessage());
             }
         });
-        getAllTasks();
     }
 
-    public void updateIsDoneField(int taskId, boolean isDone, int position) {
+    public void updateIsDoneField(int taskId, boolean isDone) {
+        for (Task task : allTasks) {
+            if (task.getId() == taskId)
+                task.setDone(true);
+        }
+        filteredTasks(allTasks);
         myExecutor.execute(() -> {
             try {
                 MainActivity.getAppDataBase().taskDao().updateTaskDoneField(
                         Calendar.getInstance().getTimeInMillis(),
                         taskId,
                         isDone);
-
-                List<Task> updatedTasks = tasksLiveData.getValue();
-                Task updatedTask = updatedTasks.get(position);
-                updatedTask.setDone(isDone);
-                updatedTask.setDeadlineDate(Calendar.getInstance().getTimeInMillis());
-                updatedTasks.set(position, updatedTask);
-                tasksLiveData.postValue(updatedTasks);
             } catch (Exception e) {
                 Log.d("myTag", "update task error: " + e.getMessage());
             }
@@ -147,7 +136,6 @@ public class TasksViewModel extends ViewModel {
 
     public void updateTask(String taskName, int position) {
         Task taskToUpdate = Objects.requireNonNull(tasksLiveData.getValue()).get(position);
-
         if (taskToUpdate != null) {
             taskToUpdate.setTaskName(taskName);
             if (deadlineDate != null) {

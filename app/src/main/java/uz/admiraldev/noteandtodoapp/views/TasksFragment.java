@@ -181,7 +181,7 @@ public class TasksFragment extends Fragment implements TasksAdapter.TaskItemClic
     }
 
     @Override
-    public void checkBoxChecked(int id, int position) {
-        tasksViewModel.updateIsDoneField(id, true, position);
+    public void checkBoxChecked(int id) {
+        tasksViewModel.updateIsDoneField(id, true);
     }
 }

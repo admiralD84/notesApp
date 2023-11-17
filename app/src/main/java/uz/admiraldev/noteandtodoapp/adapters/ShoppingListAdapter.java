@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case NOT_DONE_ITEM_VIEW:
             default:
                 View notCompletedItemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_shop_list, parent, false);
+                        .inflate(R.layout.item_products, parent, false);
                 myViewHolder = new NotCompletedPurchaseViewHolder(notCompletedItemView, shopListViewModel);
                 break;
         }

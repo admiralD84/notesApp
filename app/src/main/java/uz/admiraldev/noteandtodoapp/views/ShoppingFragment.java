@@ -40,7 +40,20 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentShoppingBinding.inflate(getLayoutInflater(), container, false);
-        shoppingViewModel = new ViewModelProvider(requireActivity()).get(ShopListViewModel.class);
+        confirmDialog = new DeleteConfirmDialog(new DeleteConfirmDialog.ClickListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+                shoppingViewModel.deleteSelectedProducts();
+                binding.ivClearSelected.setVisibility(View.GONE);
+                isActionDelete = !isActionDelete;
+                shoppingViewModel.setIsActionDelete(isActionDelete);
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+                confirmDialog.dismiss();
+            }
+        });
         return binding.getRoot();
     }
 
@@ -57,6 +70,7 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        shoppingViewModel = new ViewModelProvider(requireActivity()).get(ShopListViewModel.class);
         binding.rvShoppingList.setLayoutManager(new LinearLayoutManager(requireContext()));
         shopAdapter = new ShoppingListAdapter(this, requireContext(), shoppingViewModel);
         shoppingViewModel.shoppingListLive.observe(getViewLifecycleOwner(), products -> {
@@ -85,20 +99,6 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
         binding.ivProductDelete.setOnClickListener(view1 -> {
             int selectedItemsCount = shoppingViewModel.getSelectedProductsCount();
             if (selectedItemsCount > 0) {
-                confirmDialog = new DeleteConfirmDialog(new DeleteConfirmDialog.ClickListener() {
-                    @Override
-                    public void onPositiveButtonClicked() {
-                        shoppingViewModel.deleteSelectedProducts(isPurchasedHidden);
-                        binding.ivClearSelected.setVisibility(View.GONE);
-                        isActionDelete = !isActionDelete;
-                        shoppingViewModel.setIsActionDelete(isActionDelete);
-                    }
-
-                    @Override
-                    public void onNegativeButtonClicked() {
-                        confirmDialog.dismiss();
-                    }
-                });
                 confirmDialog.setAlertTitle(getString(R.string.product_delete_dialog_title));
                 confirmDialog.setAlertMessage(getString(R.string.product_delete_dialog_desc));
                 confirmDialog.setVisibilityPositiveBtn(true);
@@ -128,11 +128,11 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
         binding.ivShowHidePurchased.setOnClickListener(hideCompletedBtn -> {
             isPurchasedHidden = !isPurchasedHidden;
             if (isPurchasedHidden) {
-                shoppingViewModel.hidePurchasedProducts();
-                binding.ivShowHidePurchased.setImageResource(R.drawable.ic_show);
-            } else {
-                shoppingViewModel.showAllProducts();
+                shoppingViewModel.setShowPurchasedProducts(false);
                 binding.ivShowHidePurchased.setImageResource(R.drawable.ic_hide);
+            } else {
+                shoppingViewModel.setShowPurchasedProducts(true);
+                binding.ivShowHidePurchased.setImageResource(R.drawable.ic_show);
             }
             binding.ivShowHidePurchased.setImageTintList(
                     ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.blue2)));
@@ -148,7 +148,7 @@ public class ShoppingFragment extends Fragment implements ShoppingListAdapter.Pr
     @Override
     public void purchaseDoneChanged(int id) {
         purchaseConfirmDialog = new PurchaseConfirmDialog((coast, quantity) -> {
-            shoppingViewModel.updateIsDoneField(id, true, quantity, coast);
+            shoppingViewModel.updateIsDoneField(id, quantity, coast);
             purchaseConfirmDialog.dismiss();
         });
         purchaseConfirmDialog.show(requireActivity().getSupportFragmentManager(),

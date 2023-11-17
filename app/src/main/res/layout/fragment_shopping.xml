@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/page_title"
-        tools:listitem="@layout/item_shop_list" />
+        tools:listitem="@layout/item_products" />
 
     <TextView
         android:id="@+id/tv_empty_list"

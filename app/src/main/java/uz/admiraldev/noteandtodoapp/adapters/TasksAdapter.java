@@ -127,7 +127,7 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             isDoneCheckbox.setOnCheckedChangeListener((checkBoxView, isChecked) -> {
                 currentTask.setDone(isChecked);
-                clickListener.checkBoxChecked(currentTask.getId(), getAdapterPosition());
+                clickListener.checkBoxChecked(currentTask.getId());
             });
         }
     }
@@ -202,6 +202,6 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         void taskRepeatBtnClicked(int id, int position);
 
-        void checkBoxChecked(int id, int position);
+        void checkBoxChecked(int id);
     }
 }

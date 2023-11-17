@@ -34,7 +34,7 @@ public class TaskAddDialog extends DialogFragment {
     TextInputEditText taskName;
     private boolean isUpdateTask = false;
     private boolean isRestoreTask = false;
-    SimpleDateFormat dateFormat;
+    private SimpleDateFormat dateFormat;
     private ImageView btnClose;
     private final int position;
     public TextView addDeadlineDate, addDeadlineTime, dialogTitle, deadlineTitle;
