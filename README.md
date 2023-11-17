@@ -62,24 +62,24 @@ ___
 ___
 ## **Фотки**
 
-| ![notes page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-43.jpg "Notes page") |![add note](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-34.jpg "Add new note") |  ![note read](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-57-14.jpg "Read notes page") | ![settings page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-37.jpg "Settings page") |
-|------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| ![notes page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-43.jpg "Notes page") | ![add note](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-34.jpg "Add new note") | ![note read](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-57-14.jpg "Read notes page") | ![settings page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-37.jpg "Settings page") |
+|---------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
 ___
 
-| ![tasks](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-31.jpg "Tasks page") | ![tasks menu](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-13.jpg "Task page menu") | ![add products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-28.jpg "Add new products") |  ![products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-32.jpg "Shopping list") |
-|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| ![tasks](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-31.jpg "Tasks page") | ![tasks menu](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-13.jpg "Task page menu") | ![add products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-28.jpg "Add new products") | ![products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-32.jpg "Shopping list") |
+|----------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
 
 
 ## **Гифки**
-|Locale App |![overview](https://github.com/admiralD84/notesApp/blob/master/images/tasks.gif) |      ADD NEW NOTE               | ![add note](https://github.com/admiralD84/notesApp/blob/master/images/add_notes.gif) |
-|---|-------------------------------|---------------------------------------------------|----------------------------------------------------------------------------------------|
+| Locale App | ![overview](https://github.com/admiralD84/notesApp/blob/master/images/tasks.gif) | ADD NEW NOTE | ![add note](https://github.com/admiralD84/notesApp/blob/master/images/add_notes.gif) |
+|------------|----------------------------------------------------------------------------------|--------------|--------------------------------------------------------------------------------------|
 
 ___
-|ADD NEW TASK| ![add task](https://github.com/admiralD84/notesApp/blob/master/images/add_tasks.gif) |ADD NEW PRODUCT| ![mark product purchased](https://github.com/admiralD84/notesApp/blob/master/images/product_purchase.gif) |
-|-----|----------------------------------------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------|
+| ADD NEW TASK | ![add task](https://github.com/admiralD84/notesApp/blob/master/images/add_tasks.gif) | ADD NEW PRODUCT | ![mark product purchased](https://github.com/admiralD84/notesApp/blob/master/images/product_purchase.gif) |
+|--------------|--------------------------------------------------------------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------|
 
 
-### **Разработчик:** Анвар Ахмедов
+### **Разработчик:**  *Анвар Ахмедов*
 
 :earth_asia: [Telegram](https://t.me/admiralD)
 
