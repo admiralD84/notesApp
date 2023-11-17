@@ -61,21 +61,22 @@ ___
 ___
 ___
 ## **Фотки**
-![tasks](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-31.jpg)
-![products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-32.jpg)
-![add products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-28.jpg)
-![tasks menu](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-13.jpg)
-![add note](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-34.jpg)
-![settings page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-37.jpg)
-![notes page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-43.jpg)
-![note read](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-57-14.jpg)
+
+| ![notes page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-43.jpg "Notes page") |![add note](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-34.jpg "Add new note") |  ![note read](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-57-14.jpg "Read notes page") | ![settings page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-37.jpg "Settings page") |
+|------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+___
+
+| ![tasks](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-31.jpg "Tasks page") | ![tasks menu](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-13.jpg "Task page menu") | ![add products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-28.jpg "Add new products") |  ![products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-32.jpg "Shopping list") |
+|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+
 
 ## **Гифки**
-![overview](https://github.com/admiralD84/notesApp/blob/master/images/tasks.gif)
-![add note](https://github.com/admiralD84/notesApp/blob/master/images/add_notes.gif)
-![add task](https://github.com/admiralD84/notesApp/blob/master/images/add_tasks.gif)
-![mark product purchased](https://github.com/admiralD84/notesApp/blob/master/images/product_purchase.gif)
+| ![overview](https://github.com/admiralD84/notesApp/blob/master/images/tasks.gif) | ![add note](https://github.com/admiralD84/notesApp/blob/master/images/add_notes.gif) |
+|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
 
+___
+| ![add task](https://github.com/admiralD84/notesApp/blob/master/images/add_tasks.gif) | ![mark product purchased](https://github.com/admiralD84/notesApp/blob/master/images/product_purchase.gif) |
+|------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
 
 
 ### **Разработчик:** Анвар Ахмедов
