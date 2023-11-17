@@ -7,28 +7,28 @@
 ## Ключевые функции
 
 1. **Создание и управление заметками:**
-   - Легкое создание, редактирование и удаление заметок с помощью интуитивного интерфейса.
+    - Легкое создание, редактирование и удаление заметок с помощью интуитивного интерфейса.
 
 2. **Функционал списка задач (To-Do):**
-   - Эффективная организация задач с помощью отдельного списка задач с возможностью удобного добавления и отметки выполненных задач.
+    - Эффективная организация задач с помощью отдельного списка задач с возможностью удобного добавления и отметки выполненных задач.
 
 3. **Управление списками покупок:**
-   - Создание и управление списками покупок для более эффективного планирования и организации походов в магазин.
+    - Создание и управление списками покупок для более эффективного планирования и организации походов в магазин.
 
 4. **Безопасный вход с помощью пин-кода:**
-   - Обеспечение безопасности данных с функцией входа по пин-коду.
+    - Обеспечение безопасности данных с функцией входа по пин-коду.
 
 5. **Учетные записи пользователей:**
-   - Сохранение данных пользователя с использованием ViewModel и LiveData для стабильности и сохранения данных между сеансами использования.
+    - Сохранение данных пользователя с использованием ViewModel и LiveData для стабильности и сохранения данных между сеансами использования.
 
 6. **Поиск и фильтрация:**
-   - Удобный поиск и фильтрация для быстрого доступа к нужной информации.
+    - Удобный поиск и фильтрация для быстрого доступа к нужной информации.
 
 7. **Управление клавиатурой:**
-   - Автоматическое скрытие виртуальной клавиатуры для удобства взаимодействия пользователя с приложением.
+    - Автоматическое скрытие виртуальной клавиатуры для удобства взаимодействия пользователя с приложением.
 
 8. **SharedPreferences для хранения данных:**
-   - Использование SharedPreferences для постоянного хранения и получения пользовательских данных.
+    - Использование SharedPreferences для постоянного хранения и получения пользовательских данных.
 
 9.  **Navigation Component:**
     - Реализация Navigation Component для плавной и структурированной навигации в приложении.
@@ -60,9 +60,25 @@ ___
 
 ___
 ___
+## **Фотки**
+![tasks](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-31.jpg, "Tasks page")
+![products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-32.jpg, "Shopping list")
+![add products](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-28.jpg, "Add new products")
+![tasks menu](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-13.jpg, "Task page menu")
+![add note](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-34.jpg, "Add new note")
+![settings page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-37.jpg, "Settings page")
+![notes page](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-27-43.jpg, "Notes page")
+![note read](https://github.com/admiralD84/notesApp/blob/master/images/photo_2023-11-17_14-57-14.jpg, "Read notes page")
 
-  
-#**Разработчик:** Анвар Ахмедов 
+## **Гифки**
+![overview](https://github.com/admiralD84/notesApp/blob/master/images/tasks.gif)
+![add note](https://github.com/admiralD84/notesApp/blob/master/images/add_notes.gif)
+![add task](https://github.com/admiralD84/notesApp/blob/master/images/add_tasks.gif)
+![mark product purchased](https://github.com/admiralD84/notesApp/blob/master/images/product_purchase.gif)
+
+
+
+### **Разработчик:** Анвар Ахмедов
 
 :earth_asia: [Telegram](https://t.me/admiralD)
 
