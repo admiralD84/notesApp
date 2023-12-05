@@ -30,7 +30,7 @@ public class AddNoteFragment extends Fragment {
     private int priority = 3;
     private String noteTitle, noteDescription;
     NotesViewModel viewModel;
-    DeleteConfirmDialog deleteDialog;
+    private DeleteConfirmDialog deleteDialog;
     private Boolean isLoadSelectedNote = false;
     private Boolean isUpdate = false;
 

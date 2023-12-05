@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
     tools:context=".views.SettingsFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -144,28 +145,20 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="0dp"
-                    android:textColorHint="@color/light_blue"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.6">
+                    android:layout_weight="0.6"
+                    android:textColorHint="@color/light_blue">
 
                     <AutoCompleteTextView
                         android:id="@+id/tv_selected_language"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="0.6"
                         android:layout_marginHorizontal="4dp"
+                        android:layout_weight="0.6"
                         android:inputType="none"
                         tools:text="Uz" />
                 </com.google.android.material.textfield.TextInputLayout>
-                <!--
-                                <Spinner
-                                    android:id="@+id/sp_lang_select"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="6dp"
-                                    android:layout_weight="0.8" />
-                                -->
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

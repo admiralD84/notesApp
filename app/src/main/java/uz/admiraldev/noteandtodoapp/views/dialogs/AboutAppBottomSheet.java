@@ -16,7 +16,6 @@ import uz.admiraldev.noteandtodoapp.databinding.AboutAppItemBinding;
 public class AboutAppBottomSheet extends BottomSheetDialogFragment {
     AboutAppItemBinding binding;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
